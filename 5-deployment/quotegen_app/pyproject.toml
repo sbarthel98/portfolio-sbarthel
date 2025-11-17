@@ -3,7 +3,7 @@ name = "quotegen"
 version = "0.1.0"
 description = "Generate quotes using a Markov chain"
 authors = [
-    { name = "Your Name", email = "your.email@example.com" }
+    { name = "Stijn Barthel", email = "SA.Barthel@student.han.nl" }
 ]
 dependencies = [
     "loguru>=0.7.2",
