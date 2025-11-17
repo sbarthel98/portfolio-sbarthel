@@ -1,0 +1,9 @@
+[data]
+assets_dir = "assets"
+artefacts_dir = "artefacts"
+# This is the filename we will save the downloaded CSV as
+filename = "quotes.csv"
+
+[model]
+# Max length for generated quotes in the backend
+max_length = 30

@@ -1,24 +1,25 @@
 [project]
-name = "slanggen"
-version = "0.4"
-description = "generate slang"
+name = "quotegen"
+version = "0.1.0"
+description = "Generate quotes using a Markov chain"
 authors = [
-    { name = "Raoul Grouls", email = "Raoul.Grouls@han.nl" }
+    { name = "Stijn Barthel", email = "s.a.barthel@student.han.nl" }
 ]
 dependencies = [
     "loguru>=0.7.2",
     "numpy",
-    "tokenizers>=0.19.1",
-    "torch>=2.0",
+    "torch>=2.0", # Kept for compatibility with original setup, though not used by new model
     "matplotlib>=3.9.2",
     "requests>=2.32.5",
+    "kaggle>=1.6.0", # Added for downloading data
+    "pandas>=2.0.0"  # Added for reading CSV
 ]
 readme = "README.md"
 requires-python = ">= 3.10"
 
 [project.optional-dependencies]
 scrape = [
-    "beautifulsoup4>=4.12.3",
+    # No longer needed, but kept to maintain structure
 ]
 frontend = [
     "fastapi[standard]>=0.115.6",
@@ -37,4 +38,4 @@ explicit = true
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/slanggen"]
+packages = ["src/quotegen"]

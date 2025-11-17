@@ -1,0 +1,133 @@
+body {
+    font-family: "Inter", Arial, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+  
+  .container {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  h1 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 28px;
+    color: #2c3e50;
+  }
+  
+  h2 {
+    font-size: 22px;
+    color: #34495e;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 10px;
+    margin-top: 40px;
+  }
+  
+  .controls {
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .controls label {
+    margin-right: 5px;
+    font-weight: 600;
+  }
+  
+  .controls input[type="number"] {
+    width: 60px;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #bdc3c7;
+    border-radius: 6px;
+    text-align: center;
+  }
+  
+  .controls input[type="range"] {
+    flex-grow: 1;
+    max-width: 200px;
+    margin: 0 5px;
+  }
+  
+  #temp-value {
+    font-weight: 600;
+    min-width: 30px;
+  }
+  
+  button {
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #2980b9;
+  }
+  
+  .words-container,
+  .starred-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  
+  .word-item {
+    background: #ecf0f1;
+    padding: 15px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 95%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    text-align: left;
+    line-height: 1.5;
+    font-style: italic;
+    color: #34495e;
+  }
+  
+  .word-item:hover {
+    background: #e0e6e8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.07);
+  }
+  
+  .word-item.starred {
+    background: #f1c40f;
+    color: #333;
+    font-weight: 600;
+    border-left: 5px solid #f39c12;
+  }
+  
+  .loading, .error {
+      color: #7f8c8d;
+      font-size: 16px;
+      padding: 20px;
+  }
+  .error {
+      color: #e74c3c;
+  }
