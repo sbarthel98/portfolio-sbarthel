@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  quotegen:
+    # Tell Compose to build the image from the Dockerfile in the current directory
+    build: .
+    # Set a friendly name for the running container
+    container_name: quotegen_app
+    # Map port 8000 on your computer to port 8000 in the container
+    ports:
+      - "8000:8000"
+    # This ensures that our local 'artefacts' are mounted into the container.
+    # This is a good practice for development, as you don't need to
+    # rebuild the image every time you re-train the model.
+    volumes:
+      - ./artefacts:/app/artefacts
