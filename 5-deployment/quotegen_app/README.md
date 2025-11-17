@@ -69,10 +69,10 @@ This command will:
 - Check for the quotegen wheel and build it if it doesn't exist.
 - Check for the markov_model.json and train the model if it doesn't exist.
 - Build the Docker image named quotegen.
-- Run the container, mapping port 80 to your local machine.
+- Run the container, mapping port 8000 to your local machine.
 
 Access the App:
-Once it's running, you can access your app at http://127.0.0.1.
+Once it's running, you can access your app at http://127.0.0.1:8000.
 
 Makefile Targets
 
