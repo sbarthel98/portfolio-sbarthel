@@ -3,7 +3,7 @@ name = "quotegen"
 version = "0.1.0"
 description = "Generate quotes using a Markov chain"
 authors = [
-    { name = "Stijn Barthel", email = "s.a.barthel@student.han.nl" }
+    { name = "Your Name", email = "your.email@example.com" }
 ]
 dependencies = [
     "loguru>=0.7.2",
@@ -11,7 +11,7 @@ dependencies = [
     "torch>=2.0", # Kept for compatibility with original setup, though not used by new model
     "matplotlib>=3.9.2",
     "requests>=2.32.5",
-    "kaggle>=1.6.0", # Added for downloading data
+    "kagglehub", # Changed from "kaggle"
     "pandas>=2.0.0"  # Added for reading CSV
 ]
 readme = "README.md"

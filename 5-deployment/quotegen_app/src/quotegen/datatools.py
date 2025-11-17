@@ -53,12 +53,12 @@ def load_data(assets_dir: Path, filename: str) -> list[str]:
     try:
         df = pd.read_csv(datafile)
         
-        if "Quote" not in df.columns:
-            logger.error(f"'Quote' column not in CSV. Available columns: {df.columns}")
+        if "quote" not in df.columns: # Changed "Quote" to "quote"
+            logger.error(f"'quote' column not in CSV. Available columns: {df.columns}")
             return []
             
         processed_quotes = (
-            df["Quote"]
+            df["quote"] # Changed "Quote" to "quote"
             .dropna()
             .apply(clean_text)
             .unique()
