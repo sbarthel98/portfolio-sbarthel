@@ -1,0 +1,65 @@
+# .gcloudignore — files and directories to exclude from the build upload
+# Keep required files (Dockerfile, cloudbuild.yaml, backend, src, artefacts, assets, pyproject, etc.)
+
+# Git and editor metadata
+.git
+.gitignore
+.vscode/
+.idea/
+
+# Python cache and build artifacts
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+*.dist-info/
+build/
+dist/
+
+# Virtual environments
+venv/
+.env
+.venv/
+env/
+
+# Large data, notebooks and local artifacts not needed for deploy
+# (Ensure your markov_model.json is NOT inside these folders if you need it!)
+*.ipynb
+.ipynb_checkpoints/
+notebooks/
+data/
+datasets/
+
+# Ignore raw data files
+*.csv
+
+# Node and other deps
+node_modules/
+
+# Logs, DBs and local caches
+logs/
+**/logs/
+*.log
+*.sqlite
+*.db
+*.db-journal
+.pytest_cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Windows System Files (Heavy binaries not needed on Linux)
+*.dll
+*.lib
+*.exe
+
+# Tests and docs not required for the container build
+tests/
+docs/
+
+# Ignore local IDE/project files
+*.sublime-project
+*.sublime-workspace

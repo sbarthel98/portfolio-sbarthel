@@ -1,0 +1,53 @@
+# .dockerignore — exclude files from Docker build context
+# Keep only files needed to build the image: Dockerfile, backend/, src/, artefacts/, assets/, pyproject.toml, quotegen.toml, uv.lock, cloudbuild.yaml, README.md
+
+# Ignore everything by default then whitelist necessary files/folders
+**
+!Dockerfile
+!backend/
+!src/
+!artefacts/
+!assets/
+!pyproject.toml
+!quotegen.toml
+!uv.lock
+!cloudbuild.yaml
+!README.md
+
+# Exclude patterns
+.git
+.gitignore
+.vscode/
+.idea/
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+*.dist-info/
+build/
+dist/
+venv/
+.venv/
+env/
+.env
+*.ipynb
+.ipynb_checkpoints/
+notebooks/
+data/
+datasets/
+node_modules/
+logs/
+**/logs/
+*.log
+*.sqlite
+*.db
+*.db-journal
+.pytest_cache/
+.DS_Store
+Thumbs.db
+tests/
+docs/
+*.sublime-project
+*.sublime-workspace

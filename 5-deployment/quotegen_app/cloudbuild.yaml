@@ -1,0 +1,37 @@
+steps:
+# Build the container image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', '$_GCR_HOSTNAME/$_PROJECT_ID/$_REPOSITORY/$_SERVICE_NAME:latest', '.']
+
+# Push the container image to Artifact Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', '$_GCR_HOSTNAME/$_PROJECT_ID/$_REPOSITORY/$_SERVICE_NAME:latest']
+
+# Deploy container image to Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args:
+  - 'run'
+  - 'deploy'
+  - '$_SERVICE_NAME'
+  - '--image'
+  - '$_GCR_HOSTNAME/$_PROJECT_ID/$_REPOSITORY/$_SERVICE_NAME:latest'
+  - '--region'
+  - '$_REGION'
+  - '--platform'
+  - 'managed'
+  - '--allow-unauthenticated'
+  - '--port'
+  - '8000'
+  - '--memory'
+  - '2Gi'
+
+substitutions:
+  _SERVICE_NAME: quotegen-app
+  _REPOSITORY: docker-repo
+  _REGION: europe-west4
+  _PROJECT_ID: portfolio-han
+  _GCR_HOSTNAME: europe-west4-docker.pkg.dev
+
+images:
+- '$_GCR_HOSTNAME/$_PROJECT_ID/$_REPOSITORY/$_SERVICE_NAME:latest'

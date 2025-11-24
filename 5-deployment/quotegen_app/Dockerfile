@@ -1,41 +1,35 @@
-# Use a slim Python base image
+# Optimized Dockerfile for smaller builds and faster caching
 FROM python:3.11-slim
 
 # Set working directory
 WORKDIR /app
 
-# Install uv
-RUN pip install uv
+# Reduce pip noise and cache usage
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
 
-# --- Dependency Installation ---
-# Copy all requirement/config files
-COPY pyproject.toml quotegen.toml uv.lock README.md ./
-COPY backend/requirements.txt ./backend/requirements.txt
+# Install minimal build deps only if needed for binary packages
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends gcc ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install backend dependencies (fastapi, uvicorn) GLOBALLY
-# Added --system flag
-RUN uv pip install -r /app/backend/requirements.txt --system
+# Copy only requirements first to leverage Docker layer caching
+COPY backend/requirements.txt /app/backend/requirements.txt
+RUN pip install --no-cache-dir -r /app/backend/requirements.txt
 
-# Copy the built wheel from your local 'dist' folder
-ARG WHEEL_FILE
-COPY dist /app/dist
-
-# Install the quotegen wheel and its dependencies (torch, numpy, etc) GLOBALLY
-# Added --system flag
-RUN uv pip install /app/dist/quotegen-*.whl --system
-
-# --- Code & Artifacts Copying ---
-# Copy the trained model artifacts
-COPY artefacts /app/artefacts
-
-# Copy the backend application code
+# Copy application source and only required artefacts
+COPY src/quotegen /app/src/quotegen
 COPY backend /app/backend
+COPY artefacts /app/artefacts
+COPY assets /app/assets
+COPY quotegen.toml pyproject.toml uv.lock /app/
 
-# Set the working directory for the backend
+# Ensure Python can import local package code without installing a wheel
+ENV PYTHONPATH=/app
+
 WORKDIR /app/backend
 
-# Expose the port the app runs on
 EXPOSE 8000
-
-# Command to run the application
 CMD ["python", "app.py"]

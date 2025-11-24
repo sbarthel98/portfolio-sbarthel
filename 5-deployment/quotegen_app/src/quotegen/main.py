@@ -7,8 +7,10 @@ from quotegen import datatools, models
 from quotegen.custom_logger import logger
 
 def main():
-    # Get config
-    configfile = Path("quotegen.toml").resolve()
+    # This finds the project root regardless of where you run the command from
+    project_root = Path(__file__).resolve().parents[2]
+    configfile = project_root / "quotegen.toml"
+    
     if not configfile.exists():
         logger.error(f"Config file not found at {configfile}")
         return
@@ -16,14 +18,14 @@ def main():
     with configfile.open(mode="rb") as f:
         config = tomllib.load(f)
 
-    # Define paths
-    assets_dir = Path(config["data"]["assets_dir"])
-    artefacts_dir = Path(config["data"]["artefacts_dir"])
+    # Define paths relative to project root
+    assets_dir = project_root / config["data"]["assets_dir"]
+    artefacts_dir = project_root / config["data"]["artefacts_dir"]
     data_filename = config["data"]["filename"]
     
     # Ensure directories exist
-    assets_dir.mkdir(exist_ok=True)
-    artefacts_dir.mkdir(exist_ok=True)
+    assets_dir.mkdir(parents=True, exist_ok=True)
+    artefacts_dir.mkdir(parents=True, exist_ok=True)
 
     # Load data
     logger.info("Loading and preprocessing data...")
