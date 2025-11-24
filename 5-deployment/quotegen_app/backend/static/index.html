@@ -1,105 +1,180 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quote Generator</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="/static/styles.css" />
-  </head>
-  <body>
-    <div class="container">
-      <h1>Quote Generator</h1>
-      <div class="controls">
-        <label for="num_words">Number of quotes:</label>
-        <input
-          type="number"
-          id="num_words"
-          name="num_words"
-          value="5"
-          min="1"
-          max="20"
-        />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Quote Generator</title>
+    <!-- Fonts: Montserrat for headers, JetBrains Mono for code/quotes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
 
-        <label for="temperature">Temperature:</label>
-        <input
-          type="range"
-          id="temperature"
-          name="temperature"
-          min="0.1"
-          max="2.0"
-          value="1.0"
-          step="0.1"
-          oninput="updateTempLabel(this.value)"
-        />
-        <span id="temp-value">1.0</span>
+    <div class="app-container">
+        <header>
+            <h1>Quote Generator</h1>
+            <p style="color: var(--text-secondary); margin-top: 10px;">Markov Chain AI • v2.0</p>
+        </header>
 
-        <button id="generate-btn">Generate Quotes</button>
-      </div>
-      <div class="words-container" id="words-container">
-        <!-- Generated quotes will appear here -->
-      </div>
-      <h2>Saved Quotes</h2>
-      <div class="starred-container" id="starred-container">
-        <!-- Starred quotes will appear here -->
-      </div>
+        <!-- Controls Section -->
+        <div class="controls-wrapper">
+            <div class="control-group">
+                <label for="num_words">Number of Quotes</label>
+                <input type="number" id="num_words" min="1" max="20" value="5">
+            </div>
+
+            <div class="control-group">
+                <label for="temperature">
+                    Creativity (Temp): <span id="temp-display" class="range-value">1.0</span>
+                </label>
+                <input type="range" id="temperature" min="0.1" max="2.0" step="0.1" value="1.0">
+            </div>
+
+            <button id="generate-btn" class="btn-primary">Generate New Quotes</button>
+        </div>
+
+        <!-- Output Section -->
+        <section>
+            <h2>Generated Quotes</h2>
+            <div id="generated-container" class="quotes-grid">
+                <div class="message">Ready to generate...</div>
+            </div>
+        </section>
+
+        <!-- Saved Section -->
+        <section>
+            <h2>Saved Collection</h2>
+            <div id="saved-container" class="quotes-grid">
+                <div class="message" style="font-size: 0.9rem;">Click on a generated quote to save it here.</div>
+            </div>
+        </section>
     </div>
 
     <script>
-      let starredWords = [];
+        // State Management
+        const state = {
+            savedQuotes: new Set(), // Use Set for auto-deduplication
+            lastGenerated: []
+        };
 
-      function updateTempLabel(value) {
-        document.getElementById("temp-value").textContent = value;
-      }
+        // UI References
+        const els = {
+            btn: document.getElementById('generate-btn'),
+            numInput: document.getElementById('num_words'),
+            tempInput: document.getElementById('temperature'),
+            tempDisplay: document.getElementById('temp-display'),
+            genContainer: document.getElementById('generated-container'),
+            savedContainer: document.getElementById('saved-container')
+        };
 
-      function updateStarredContainer() {
-        const starredContainer = document.getElementById("starred-container");
-        starredContainer.innerHTML = "";
-        starredWords.forEach((word) => {
-          const wordElement = document.createElement("div");
-          wordElement.className = "word-item starred";
-          wordElement.textContent = word;
-          starredContainer.appendChild(wordElement);
+        // Event Listeners
+        els.tempInput.addEventListener('input', (e) => {
+            els.tempDisplay.textContent = parseFloat(e.target.value).toFixed(1);
         });
-      }
 
-      document
-        .getElementById("generate-btn")
-        .addEventListener("click", function () {
-          const numWords = document.getElementById("num_words").value;
-          const temperature = document.getElementById("temperature").value;
-          
-          const wordsContainer = document.getElementById("words-container");
-          wordsContainer.innerHTML = "<div class='loading'>Generating...</div>";
+        els.btn.addEventListener('click', fetchQuotes);
 
-          fetch(`/generate?num_words=${numWords}&temperature=${temperature}`)
-            .then((response) => response.json())
-            .then((data) => {
-              wordsContainer.innerHTML = "";
-              data.forEach((word) => {
-                const wordElement = document.createElement("div");
-                wordElement.className = "word-item";
-                wordElement.textContent = word;
-                wordElement.addEventListener("click", function () {
-                  wordElement.classList.toggle("starred");
-                  if (wordElement.classList.contains("starred")) {
-                    starredWords.push(word);
-                  } else {
-                    starredWords = starredWords.filter((w) => w !== word);
-                  }
-                  updateStarredContainer();
-                });
-                wordsContainer.appendChild(wordElement);
-              });
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-                wordsContainer.innerHTML = "<div class='error'>Failed to generate quotes. Check console.</div>";
+        // Main Fetch Function
+        async function fetchQuotes() {
+            const num = els.numInput.value;
+            const temp = els.tempInput.value;
+
+            // UI Loading State
+            els.btn.disabled = true;
+            els.btn.innerText = "Processing Markov Chain...";
+            els.genContainer.innerHTML = `<div class="message">Generating ${num} quotes at temp ${temp}...</div>`;
+
+            try {
+                const response = await fetch(`/generate?num_words=${num}&temperature=${temp}`);
+                
+                if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
+                
+                const quotes = await response.json();
+                renderGenerated(quotes);
+
+            } catch (error) {
+                console.error(error);
+                els.genContainer.innerHTML = `<div class="error-msg">System Error: ${error.message}</div>`;
+            } finally {
+                els.btn.disabled = false;
+                els.btn.innerText = "Generate New Quotes";
+            }
+        }
+
+        // Render Generated List
+        function renderGenerated(quotes) {
+            els.genContainer.innerHTML = '';
+            
+            if (quotes.length === 0) {
+                els.genContainer.innerHTML = '<div class="message">No quotes generated. Try adjusting settings.</div>';
+                return;
+            }
+
+            quotes.forEach(text => {
+                const card = document.createElement('div');
+                card.className = 'quote-card';
+                card.textContent = text;
+                
+                // Check if already saved to apply style immediately
+                if (state.savedQuotes.has(text)) {
+                    card.classList.add('starred');
+                }
+
+                // Click Handler
+                card.addEventListener('click', () => toggleSave(text, card));
+                
+                els.genContainer.appendChild(card);
             });
-        });
+        }
+
+        // Render Saved List
+        function renderSaved() {
+            els.savedContainer.innerHTML = '';
+
+            if (state.savedQuotes.size === 0) {
+                els.savedContainer.innerHTML = '<div class="message" style="font-size: 0.9rem;">Click on a generated quote to save it here.</div>';
+                return;
+            }
+
+            state.savedQuotes.forEach(text => {
+                const card = document.createElement('div');
+                card.className = 'quote-card starred';
+                card.textContent = text;
+                
+                // Clicking a saved quote removes it
+                card.addEventListener('click', () => toggleSave(text, null));
+                
+                els.savedContainer.appendChild(card);
+            });
+        }
+
+        // Logic to toggle saved state
+        function toggleSave(text, generatedCardElement) {
+            if (state.savedQuotes.has(text)) {
+                // Remove
+                state.savedQuotes.delete(text);
+                if (generatedCardElement) generatedCardElement.classList.remove('starred');
+            } else {
+                // Add
+                state.savedQuotes.add(text);
+                if (generatedCardElement) generatedCardElement.classList.add('starred');
+            }
+            
+            // Sync saved section
+            renderSaved();
+            
+            // Sync generated section visuals if we clicked from "Saved" list
+            // (Finds any cards in generated list with this text and updates class)
+            Array.from(els.genContainer.children).forEach(card => {
+                if (card.textContent === text) {
+                    state.savedQuotes.has(text) 
+                        ? card.classList.add('starred') 
+                        : card.classList.remove('starred');
+                }
+            });
+        }
     </script>
-  </body>
+</body>
 </html>
