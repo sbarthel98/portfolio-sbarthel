@@ -275,7 +275,9 @@ if __name__ == "__main__":
     df = analyze_experiments()
     
     # Save summary to CSV
-    if not df.empty:
+    if df is not None and not df.empty:
         output_csv = "experiment_summary.csv"
         df.to_csv(output_csv, index=False)
         print(f"\nExperiment summary saved to: {output_csv}")
+    else:
+        print("\nNo results to save. Please run experiments first.")

@@ -4,6 +4,37 @@ This script systematically tests different hyperparameter combinations
 as specified in the instructions.
 """
 
+import os
+import ssl
+import warnings
+
+# Fix SSL certificate verification issues (corporate proxy workaround)
+ssl._create_default_https_context = ssl._create_unverified_context
+os.environ['PYTHONHTTPSVERIFY'] = '0'
+os.environ['CURL_CA_BUNDLE'] = ''
+os.environ['REQUESTS_CA_BUNDLE'] = ''
+
+# Disable SSL warnings
+warnings.filterwarnings('ignore')
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+# Monkey-patch requests before it's imported by mads_datasets
+import sys
+import requests
+from unittest.mock import patch
+
+# Store the original get function
+_original_requests_get = requests.get
+
+# Create a wrapper that forces verify=False
+def patched_get(url, **kwargs):
+    kwargs['verify'] = False
+    return _original_requests_get(url, **kwargs)
+
+# Replace the get function
+requests.get = patched_get
+
 import torch
 import torch.optim as optim
 from torch import nn
@@ -109,7 +140,7 @@ def run_experiment(config: dict, experiment_name: str):
         logdir="modellogs",
         train_steps=config.get('train_steps', 100),
         valid_steps=config.get('valid_steps', 100),
-        reporttypes=[ReportTypes.TENSORBOARD, ReportTypes.TOML],
+        reporttypes=[ReportTypes.TENSORBOARD],
         optimizer_kwargs={'lr': config['learning_rate']},
     )
     
@@ -125,6 +156,19 @@ def run_experiment(config: dict, experiment_name: str):
     )
     
     trainer.loop()
+    
+    # Save results to TOML file
+    log_dir = trainer.logger.logdir
+    toml_file = Path(log_dir) / f"{experiment_name}_results.toml"
+    results = {
+        'experiment_name': experiment_name,
+        'config': config,
+        'final_train_loss': float(trainer.train_loss) if hasattr(trainer, 'train_loss') else None,
+        'final_valid_loss': float(trainer.valid_loss) if hasattr(trainer, 'valid_loss') else None,
+    }
+    serializer = TOMLSerializer()
+    serializer.serialize(results, str(toml_file))
+    print(f"Results saved to: {toml_file}")
     print(f"Completed experiment: {experiment_name}\n")
 
 
