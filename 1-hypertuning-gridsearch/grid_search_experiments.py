@@ -41,7 +41,7 @@ from torch import nn
 from mads_datasets import DatasetFactoryProvider, DatasetType
 from mltrainer.preprocessors import BasePreprocessor
 from mltrainer import Trainer, TrainerSettings, ReportTypes, metrics
-from tomlserializer import TOMLSerializer
+import toml
 import itertools
 from pathlib import Path
 
@@ -157,18 +157,23 @@ def run_experiment(config: dict, experiment_name: str):
     
     trainer.loop()
     
-    # Save results to TOML file
-    log_dir = trainer.logger.logdir
-    toml_file = Path(log_dir) / f"{experiment_name}_results.toml"
-    results = {
-        'experiment_name': experiment_name,
-        'config': config,
-        'final_train_loss': float(trainer.train_loss) if hasattr(trainer, 'train_loss') else None,
-        'final_valid_loss': float(trainer.valid_loss) if hasattr(trainer, 'valid_loss') else None,
-    }
-    serializer = TOMLSerializer()
-    serializer.serialize(results, str(toml_file))
-    print(f"Results saved to: {toml_file}")
+    # Save results to TOML file - use the most recent modellogs directory
+    modellogs_dir = Path("modellogs")
+    if modellogs_dir.exists():
+        # Get the most recently created directory
+        log_dirs = sorted(modellogs_dir.glob("*"), key=lambda p: p.stat().st_mtime)
+        if log_dirs:
+            log_dir = log_dirs[-1]
+            toml_file = log_dir / f"{experiment_name}_results.toml"
+            results = {
+                'experiment_name': experiment_name,
+                'config': config,
+                'final_train_loss': float(trainer.train_loss) if hasattr(trainer, 'train_loss') else None,
+                'final_valid_loss': float(trainer.valid_loss) if hasattr(trainer, 'valid_loss') else None,
+            }
+            with open(toml_file, 'w') as f:
+                toml.dump(results, f)
+            print(f"Results saved to: {toml_file}")
     print(f"Completed experiment: {experiment_name}\n")
 
 
@@ -376,10 +381,8 @@ def main():
     print("="*70 + "\n")
     
     # Run all experiments
-    # Note: Comment out experiments you don't want to run
-    
     experiment_1_epochs()
-    # experiment_2_units()  # This will take a long time (36 combinations)
+    experiment_2_units()
     experiment_3_batchsize()
     experiment_4_depth()
     experiment_5_learning_rate()

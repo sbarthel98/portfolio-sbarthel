@@ -27,44 +27,45 @@ def parse_toml_files(logdir: str = "modellogs"):
         if not exp_dir.is_dir():
             continue
         
-        model_toml = exp_dir / "model.toml"
-        settings_toml = exp_dir / "settings.toml"
+        # Look for *_results.toml files
+        result_files = list(exp_dir.glob("*_results.toml"))
         
-        if model_toml.exists() and settings_toml.exists():
-            try:
-                model_data = toml.load(model_toml)
-                settings_data = toml.load(settings_toml)
-                
-                # Combine data
-                result = {
-                    'experiment': exp_dir.name,
-                    'timestamp': exp_dir.name,
-                }
-                
-                # Extract model parameters
-                if 'model' in model_data:
-                    result.update({
-                        'units1': model_data['model'].get('units1', None),
-                        'units2': model_data['model'].get('units2', None),
-                        'depth': model_data['model'].get('depth', 2),
-                    })
-                
-                # Extract settings
-                if 'model' in settings_data:
-                    result.update({
-                        'epochs': settings_data['model'].get('epochs', None),
-                        'train_steps': settings_data['model'].get('train_steps', None),
-                        'valid_steps': settings_data['model'].get('valid_steps', None),
-                    })
+        if result_files:
+            for result_file in result_files:
+                try:
+                    data = toml.load(result_file)
                     
-                    # Extract optimizer parameters
-                    if 'optimizer_kwargs' in settings_data['model']:
-                        result['learning_rate'] = settings_data['model']['optimizer_kwargs'].get('lr', None)
-                
-                results.append(result)
-                
-            except Exception as e:
-                print(f"Error parsing {exp_dir}: {e}")
+                    # Extract experiment info
+                    result = {
+                        'experiment': data.get('experiment_name', exp_dir.name),
+                        'timestamp': exp_dir.name,
+                    }
+                    
+                    # Extract config parameters
+                    if 'config' in data:
+                        config = data['config']
+                        result.update({
+                            'epochs': config.get('epochs', None),
+                            'batchsize': config.get('batchsize', None),
+                            'units1': config.get('units1', None),
+                            'units2': config.get('units2', None),
+                            'learning_rate': config.get('learning_rate', None),
+                            'optimizer': config.get('optimizer', None),
+                            'train_steps': config.get('train_steps', None),
+                            'valid_steps': config.get('valid_steps', None),
+                        })
+                    
+                    # Extract metrics (from TensorBoard)
+                    result['final_train_loss'] = data.get('final_loss_train', None)
+                    result['final_valid_loss'] = data.get('final_loss_test', None)
+                    result['final_accuracy'] = data.get('final_metric_accuracy', None)
+                    result['final_epoch'] = data.get('final_loss_train_step', None)
+                    
+                    results.append(result)
+                    
+                except Exception as e:
+                    print(f"Warning: Could not parse {result_file}: {e}")
+                    continue
     
     return pd.DataFrame(results)
 
