@@ -28,13 +28,10 @@ This project successfully executed 61 systematic hyperparameter tuning experimen
 
 ### Execution Helpers
 - **[run_experiments.ps1](./run_experiments.ps1)** - Interactive PowerShell menu for experiment management
-- **[README_EXECUTION.md](./README_EXECUTION.md)** - Complete step-by-step execution guide
 
 ### Report Templates & Completed Reports
-- [report_template.md](./report_template.md) - Comprehensive report structure with study questions
-- **[REPORT_FILLED.md](./REPORT_FILLED.md)** - ✅ **COMPLETED** - Full technical report with all findings
-- [experiment_journal_template.md](./experiment_journal_template.md) - Scientific notebook template
-- **[EXPERIMENT_JOURNAL_FILLED.md](./EXPERIMENT_JOURNAL_FILLED.md)** - ✅ **COMPLETED** - Detailed experiment journal
+- **[report.md](./report.md)** - ✅ **COMPLETED** - Full technical report with all findings
+- **[experiment_journal.md](./experiment_journal.md)** - ✅ **COMPLETED** - Detailed experiment journal
 
 ### Legacy
 - [notebook.ipynb](./notebook.ipynb) - Original interactive notebook (reference only)
