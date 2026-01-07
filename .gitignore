@@ -6,3 +6,4 @@ gestures/
 logs/
 .lycheecache
 *.egg-info/
+.venv/
