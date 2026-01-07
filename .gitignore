@@ -1,5 +1,6 @@
 **/modellogs/**
 **/mlruns/**
+**/__pycache__/**
 .notebookcache
 gestures/
 logs/
