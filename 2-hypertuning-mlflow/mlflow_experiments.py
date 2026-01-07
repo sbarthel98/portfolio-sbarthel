@@ -35,6 +35,7 @@ import mlflow.pytorch
 from pathlib import Path
 from typing import List, Dict, Any
 import itertools
+from tqdm import tqdm
 
 
 class FlexibleCNN(nn.Module):
@@ -136,17 +137,24 @@ def setup_data(batchsize: int):
     trainstreamer = train.stream()
     validstreamer = valid.stream()
     
+    # len(train) returns number of batches already prepared, not dataset size
+    # So we return it directly as the number of batches per epoch
     return trainstreamer, validstreamer, len(train), len(valid)
 
 
 def train_epoch(model, dataloader, criterion, optimizer, device, max_batches=None):
-    """Train for one epoch"""
+    """Train for one epoch with progress bar"""
     model.train()
     running_loss = 0.0
     correct = 0
     total = 0
     
-    for batch_idx, batch in enumerate(dataloader):
+    # Use max_batches as the progress bar total if provided
+    total_batches = max_batches if max_batches else None
+    
+    pbar = tqdm(enumerate(dataloader), total=total_batches, desc="Training", leave=False)
+    
+    for batch_idx, batch in pbar:
         # Stop early if max_batches specified
         if max_batches and batch_idx >= max_batches:
             break
@@ -173,6 +181,11 @@ def train_epoch(model, dataloader, criterion, optimizer, device, max_batches=Non
         _, predicted = torch.max(outputs.data, 1)
         total += labels.size(0)
         correct += (predicted == labels).sum().item()
+        
+        # Update progress bar with current metrics
+        current_loss = running_loss / (batch_idx + 1)
+        current_acc = 100 * correct / total
+        pbar.set_postfix({'loss': f'{current_loss:.4f}', 'acc': f'{current_acc:.2f}%'})
     
     # Use batch_idx + 1 as number of batches processed
     num_batches = batch_idx + 1
@@ -182,14 +195,19 @@ def train_epoch(model, dataloader, criterion, optimizer, device, max_batches=Non
 
 
 def validate(model, dataloader, criterion, device, max_batches=None):
-    """Validate model"""
+    """Validate model with progress bar"""
     model.eval()
     running_loss = 0.0
     correct = 0
     total = 0
     
+    # Use max_batches as the progress bar total if provided
+    total_batches = max_batches if max_batches else None
+    
+    pbar = tqdm(enumerate(dataloader), total=total_batches, desc="Validating", leave=False)
+    
     with torch.no_grad():
-        for batch_idx, batch in enumerate(dataloader):
+        for batch_idx, batch in pbar:
             # Stop early if max_batches specified
             if max_batches and batch_idx >= max_batches:
                 break
@@ -212,12 +230,15 @@ def validate(model, dataloader, criterion, device, max_batches=None):
             _, predicted = torch.max(outputs.data, 1)
             total += labels.size(0)
             correct += (predicted == labels).sum().item()
+            
+            # Update progress bar with current metrics
+            current_loss = running_loss / (batch_idx + 1)
+            current_acc = 100 * correct / total
+            pbar.set_postfix({'loss': f'{current_loss:.4f}', 'acc': f'{current_acc:.2f}%'})
     
     # Use batch_idx + 1 as number of batches processed
     num_batches = batch_idx + 1
     val_loss = running_loss / num_batches
-    val_acc = 100 * correct / total
-    return val_loss, val_acc
     val_acc = 100 * correct / total
     return val_loss, val_acc
 
@@ -243,6 +264,18 @@ def run_experiment(config: Dict[str, Any], experiment_name: str):
         batchsize = config.get('batchsize', 64)
         trainloader, validloader, train_len, valid_len = setup_data(batchsize)
         
+        # train_len and valid_len are already the number of batches (not dataset size)
+        # Since streamers are infinite, we need to limit iterations
+        train_batches_per_epoch = train_len
+        valid_batches_per_epoch = valid_len
+        
+        # Allow override for quick testing
+        max_train_batches = config.get('max_batches', train_batches_per_epoch)
+        max_valid_batches = config.get('max_batches', valid_batches_per_epoch)
+        
+        print(f"Training batches per epoch: {max_train_batches}")
+        print(f"Validation batches per epoch: {max_valid_batches}")
+        
         # Create model
         model = FlexibleCNN(config).to(device)
         
@@ -264,12 +297,22 @@ def run_experiment(config: Dict[str, Any], experiment_name: str):
         
         # Training loop
         epochs = config.get('epochs', 10)
-        max_batches = config.get('max_batches', None)  # For quick testing
         best_val_acc = 0.0
         
-        for epoch in range(epochs):
-            train_loss, train_acc = train_epoch(model, trainloader, criterion, optimizer, device, max_batches)
-            val_loss, val_acc = validate(model, validloader, criterion, device, max_batches)
+        # Create progress bar for epochs
+        epoch_pbar = tqdm(range(epochs), desc=f"Epochs ({experiment_name})", position=0)
+        
+        for epoch in epoch_pbar:
+            train_loss, train_acc = train_epoch(model, trainloader, criterion, optimizer, device, max_train_batches)
+            val_loss, val_acc = validate(model, validloader, criterion, device, max_valid_batches)
+            
+            # Update epoch progress bar with metrics
+            epoch_pbar.set_postfix({
+                'train_loss': f'{train_loss:.4f}',
+                'train_acc': f'{train_acc:.2f}%',
+                'val_loss': f'{val_loss:.4f}',
+                'val_acc': f'{val_acc:.2f}%'
+            })
             
             # Log metrics to MLflow
             mlflow.log_metric("train_loss", train_loss, step=epoch)
@@ -327,10 +370,14 @@ def experiment_1_dropout():
         'optimizer': 'Adam'
     }
     
-    for dropout in dropout_rates:
+    print(f"📊 Running {len(dropout_rates)} experiments with different dropout rates\n")
+    
+    for idx, dropout in enumerate(dropout_rates, 1):
+        print(f"\n🔬 Experiment {idx}/{len(dropout_rates)}: Testing dropout={dropout}")
         config = base_config.copy()
         config['dropout_rate'] = dropout
         run_experiment(config, f"dropout_{dropout}")
+        print(f"✅ Completed experiment {idx}/{len(dropout_rates)}\n")
 
 
 def experiment_2_batch_norm():

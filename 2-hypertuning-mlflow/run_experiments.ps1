@@ -27,7 +27,7 @@ function Run-AllExperiments {
     
     if ($confirm -eq 'y') {
         Write-Host "`nStarting experiments..." -ForegroundColor Yellow
-        & ..\.venv\Scripts\python.exe mlflow_experiments.py
+        python mlflow_experiments.py
     }
 }
 
@@ -62,12 +62,12 @@ run_experiment(config, 'quick_test')
 print("\n✓ Quick test completed successfully!")
 "@
     
-    $testScript | & ..\.venv\Scripts\python.exe
+    $testScript | python
 }
 
 function Analyze-Results {
     Write-Host "`nAnalyzing results..." -ForegroundColor Green
-    & ..\.venv\Scripts\python.exe analyze_mlflow_results.py
+    python analyze_mlflow_results.py
 }
 
 function Launch-MLflowUI {
@@ -75,7 +75,7 @@ function Launch-MLflowUI {
     Write-Host "MLflow UI will open at http://localhost:5000" -ForegroundColor Yellow
     Write-Host "Press Ctrl+C to stop the server" -ForegroundColor Yellow
     Write-Host ""
-    & ..\.venv\Scripts\python.exe -m mlflow ui
+    python -m mlflow ui
 }
 
 function Show-Summary {
