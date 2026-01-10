@@ -1,0 +1,41 @@
+run_name,model_type,description,hidden_size,num_layers,dropout,total_params,best_valid_accuracy,train_accuracy,valid_accuracy,valid_loss,start_time
+optimal_config,optimal_bidirectional_gru,"Optimal: Bidirectional GRU 256 hidden, 2 layers, dropout 0.2",256.0,2.0,0.2,1593876.0,0.990625,1.0,0.9890625,0.07132274627219885,1768054023969
+deep_gru,deep_gru,Deep GRU with LayerNorm and Dropout,128.0,3.0,0.3,252052.0,0.9953125,0.99296875,0.9828125,0.05596755635924637,1768054018085
+conv1d_gru,conv1d_gru,Conv1D feature extraction + GRU,128.0,2.0,0.2,157876.0,0.990625,0.99921875,0.9859375,0.05343031676020473,1768054011224
+bidirectional_gru_h128,bidirectional_gru_h128,Bidirectional GRU - 128 hidden units,128.0,2.0,0.2,403732.0,0.996875,0.998046875,0.990625,0.03580638654530048,1768054005621
+lstm_128,lstm_128,LSTM with 128 hidden units,128.0,2.0,0.2,202772.0,0.9625,0.966015625,0.9625,0.14934835731983184,1768054000952
+gru_128,gru_128,GRU with 128 hidden units,128.0,2.0,0.2,152724.0,0.9921875,0.99375,0.990625,0.04633432254195213,1768053996656
+gru_dropout_0.3,gru_dropout_0.3,2-layer GRU with dropout=0.3,128.0,2.0,0.3,152724.0,0.990625,0.998046875,0.990625,0.06250204425305128,1768053992374
+gru_dropout_0.2,gru_dropout_0.2,2-layer GRU with dropout=0.2,128.0,2.0,0.2,152724.0,0.9890625,0.98671875,0.9890625,0.0797773903235793,1768053988198
+gru_dropout_0.0,gru_dropout_0.0,2-layer GRU with dropout=0.0,128.0,2.0,0.0,152724.0,0.978125,0.99296875,0.9671875,0.15342541709542273,1768053984226
+gru_depth_l2,gru_depth_l2,Two layer GRU,128.0,2.0,0.2,152724.0,0.99375,0.995703125,0.99375,0.02591022402048111,1768053979551
+gru_depth_l1,gru_depth_l1,Single layer GRU,128.0,1.0,0.0,53652.0,0.9734375,0.99140625,0.96875,0.11135582812130451,1768053975430
+baseline_gru_h256,baseline_gru_h256,Extra large baseline - 256 units,256.0,1.0,0.0,205588.0,0.9921875,0.997265625,0.9921875,0.034919355530291796,1768053969609
+baseline_gru_h128,baseline_gru_h128,Large baseline - 128 units,128.0,1.0,0.0,53652.0,0.9671875,0.976953125,0.9671875,0.15174711123108864,1768053965407
+baseline_gru_h64,baseline_gru_h64,Medium baseline - 64 units,64.0,1.0,0.0,14548.0,0.8703125,0.831640625,0.8703125,0.5514136254787445,1768053960837
+baseline_gru_h64,baseline_gru_h64,Medium baseline - 64 units,64.0,1.0,0.0,14548.0,,,,,1768053610849
+baseline_gru_h32,unknown,,,,,,,,,,1768053436809
+gru_dropout_0.0,gru_dropout_0.0,2-layer GRU with dropout=0.0,128.0,2.0,0.0,152724.0,,,,,1768053414584
+gru_depth_l2,gru_depth_l2,Two layer GRU,128.0,2.0,0.2,152724.0,,,,,1768053365296
+gru_depth_l1,gru_depth_l1,Single layer GRU,128.0,1.0,0.0,53652.0,,,,,1768053340142
+baseline_gru_h256,baseline_gru_h256,Extra large baseline - 256 units,256.0,1.0,0.0,205588.0,,,,,1768053296439
+baseline_gru_h128,baseline_gru_h128,Large baseline - 128 units,128.0,1.0,0.0,53652.0,,,,,1768053272416
+baseline_gru_h64,baseline_gru_h64,Medium baseline - 64 units,64.0,1.0,0.0,14548.0,,,,,1768053256042
+gru_depth_l1,gru_depth_l1,Single layer GRU,128.0,1.0,0.0,53652.0,,,,,1768052511492
+baseline_gru_h32,baseline_gru_h32,Small baseline - 32 units,32.0,1.0,0.0,4212.0,,,,,1768052493027
+optimal_config,optimal_bidirectional_gru,"Optimal: Bidirectional GRU 256 hidden, 2 layers, dropout 0.2",256.0,2.0,0.2,1593876.0,,,,,1768052438509
+deep_gru,deep_gru,Deep GRU with LayerNorm and Dropout,128.0,3.0,0.3,252052.0,,,,,1768052436942
+conv1d_gru,conv1d_gru,Conv1D feature extraction + GRU,128.0,2.0,0.2,157876.0,,,,,1768052435567
+bidirectional_gru_h64,bidirectional_gru_h64,Bidirectional GRU - 64 hidden units,64.0,2.0,0.2,103572.0,,,,,1768052434225
+gru_128,gru_128,GRU with 128 hidden units,128.0,2.0,0.2,152724.0,,,,,1768052432858
+gru_dropout_0.0,gru_dropout_0.0,2-layer GRU with dropout=0.0,128.0,2.0,0.0,152724.0,,,,,1768052431473
+gru_depth_l1,gru_depth_l1,Single layer GRU,128.0,1.0,0.0,53652.0,,,,,1768052429950
+baseline_gru_h32,baseline_gru_h32,Small baseline - 32 units,32.0,1.0,0.0,4212.0,,,,,1768052427203
+optimal_config,optimal_bidirectional_gru,"Optimal: Bidirectional GRU 256 hidden, 2 layers, dropout 0.2",256.0,2.0,0.2,1593876.0,,,,,1768052355268
+deep_gru,deep_gru,Deep GRU with LayerNorm and Dropout,128.0,3.0,0.3,252052.0,,,,,1768052353812
+conv1d_gru,conv1d_gru,Conv1D feature extraction + GRU,128.0,2.0,0.2,157876.0,,,,,1768052352434
+bidirectional_gru_h64,bidirectional_gru_h64,Bidirectional GRU - 64 hidden units,64.0,2.0,0.2,103572.0,,,,,1768052350947
+gru_128,gru_128,GRU with 128 hidden units,128.0,2.0,0.2,152724.0,,,,,1768052349575
+gru_dropout_0.0,gru_dropout_0.0,2-layer GRU with dropout=0.0,128.0,2.0,0.0,152724.0,,,,,1768052348166
+gru_depth_l1,gru_depth_l1,Single layer GRU,128.0,1.0,0.0,53652.0,,,,,1768052346742
+baseline_gru_h32,baseline_gru_h32,Small baseline - 32 units,32.0,1.0,0.0,4212.0,,,,,1768052326948
