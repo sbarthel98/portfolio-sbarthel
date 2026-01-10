@@ -67,10 +67,10 @@ This journal documents the systematic exploration of hyperparameter effects on n
 | 10 | **85.5%** | 0.399 | 0.401 | -0.002 |
 
 **Key Insights**:
-1. ✅ Hypothesis confirmed: More epochs = better performance
+1. Hypothesis confirmed: More epochs = better performance
 2. Each doubling showed improvement but with diminishing returns (3→5 gained 4.1%, 5→10 gained 1.9%)
 3. No overfitting detected - valid loss decreased alongside train loss
-4. 10 epochs showed perfect generalization (valid loss < train loss!)
+4. 10 epochs showed perfect generalization (valid loss < train loss)
 
 **Conclusion**: For Fashion MNIST with this architecture, 10 epochs is optimal. Could potentially train longer, but gains would be minimal.
 
@@ -95,7 +95,7 @@ This journal documents the systematic exploration of hyperparameter effects on n
 
 **Expected Outcome**:
 - Tiny networks (16/16): ~75-80% (underfitting)
-- Medium networks (128/128, 256/256): ~82-85% (sweet spot)
+- Medium networks (128/128, 256/256): ~82-85% (optimal range)
 - Large networks (512/512): ~83-85% (diminishing returns)
 
 **Experiment IDs**: units_16_16 through units_512_512  
@@ -108,7 +108,7 @@ This journal documents the systematic exploration of hyperparameter effects on n
 **Small networks (16-64 units)**:
 - Trained very fast (1-2 minutes per config)
 - Some showed convergence issues (loss plateaued early)
-- units_16_16: 79.0% - surprisingly decent!
+- units_16_16: 79.0% - surprisingly decent
 - units_64_16: 78.8% - bottleneck in second layer hurt performance
 
 **Medium networks (128-256 units)**:
@@ -120,17 +120,17 @@ This journal documents the systematic exploration of hyperparameter effects on n
 **Large networks (512 units)**:
 - Slowest training (3-4 minutes per config)
 - Similar performance to medium networks
-- units_512_128: **84.5%** - best in category!
+- units_512_128: **84.5%** - best in category
 - units_512_512: 83.3% - no better than smaller configs
 
-**Interesting finding**: Asymmetric configurations (e.g., 128/512, 512/128) often outperformed symmetric ones!
+**Interesting finding**: Asymmetric configurations (e.g., 128/512, 512/128) often outperformed symmetric ones.
 
 ---
 
 ### Post-Experiment Analysis
 
 **Top 5 Performers**:
-1. units_512_128: 84.5% ⭐
+1. units_512_128: 84.5% (Best)
 2. units_128_512: 83.5%
 3. units_256_128: 83.8%
 4. units_512_256: 83.8%
@@ -144,8 +144,8 @@ This journal documents the systematic exploration of hyperparameter effects on n
 5. units_32_16: 80.2%
 
 **Patterns Discovered**:
-1. ✅ Hypothesis confirmed: Larger networks generally better, but diminishing returns above 256
-2. ❗ Surprising: Asymmetric configs outperformed symmetric
+1. Hypothesis confirmed: Larger networks generally better, but diminishing returns above 256
+2. Surprising: Asymmetric configs outperformed symmetric
 3. Bottlenecks hurt: X/16 configs underperformed regardless of first layer size
 4. Even smallest config (16/16) achieved 79% - task is learnable with minimal capacity
 
@@ -183,8 +183,8 @@ This journal documents the systematic exploration of hyperparameter effects on n
 
 ### Observations During Training
 
-**batchsize_4** (DISASTER):
-- Training extremely slow (15 minutes!)
+**batchsize_4** (very poor performance):
+- Training extremely slow (15 minutes)
 - Loss jumped around wildly
 - Never properly converged
 - Final: 73.8% accuracy, loss 0.757
@@ -192,7 +192,7 @@ This journal documents the systematic exploration of hyperparameter effects on n
 **batchsize_8**:
 - Similar issues to batch 4
 - Loss variance still very high
-- Actually WORSE than batch 4: 70.5%!
+- Actually WORSE than batch 4: 70.5%
 - Appeared to bounce out of good minima
 
 **batchsize_16**:
@@ -224,16 +224,16 @@ This journal documents the systematic exploration of hyperparameter effects on n
 
 | Batch Size | Accuracy | Valid Loss | Train Loss | Training Time |
 |------------|----------|------------|------------|---------------|
-| 4 | 73.8% | 0.757 | 0.806 | 15 min ⚠️ |
-| 8 | 70.5% | 0.723 | 0.714 | 12 min ⚠️ |
+| 4 | 73.8% | 0.757 | 0.806 | 15 min (slow) |
+| 8 | 70.5% | 0.723 | 0.714 | 12 min (slow) |
 | 16 | 77.2% | 0.614 | 0.560 | 8 min |
 | 32 | 82.2% | 0.495 | 0.499 | 5 min |
 | 64 | 83.6% | 0.468 | 0.473 | 4 min |
-| 128 | **84.4%** | 0.430 | 0.421 | 3 min ⭐ |
+| 128 | **84.4%** | 0.430 | 0.421 | 3 min (best) |
 
 **Key Insights**:
-1. ✅ Hypothesis confirmed: Medium-large batches (32-128) optimal
-2. ❗ Dramatic failure with tiny batches: 4 & 8 couldn't converge properly
+1. Hypothesis confirmed: Medium-large batches (32-128) optimal
+2. Dramatic failure with tiny batches: 4 & 8 couldn't converge properly
 3. Batch size 128 was both FASTEST and MOST ACCURATE
 4. Very small batches have both slow training AND poor results
 
@@ -279,10 +279,10 @@ This journal documents the systematic exploration of hyperparameter effects on n
 
 ### Observations During Training
 
-**depth_1** (SURPRISE WINNER):
+**depth_1** (best performance):
 - Simple architecture: Input → 256 → Output
 - Clean, smooth training
-- **82.9%** accuracy - BEST performance!
+- **82.9%** accuracy - BEST performance
 - Valid loss 0.477
 
 **depth_2** (baseline):
@@ -305,12 +305,12 @@ This journal documents the systematic exploration of hyperparameter effects on n
 
 | Depth | Layers | Accuracy | Valid Loss | Parameters |
 |-------|--------|----------|------------|------------|
-| 1 | Input→256→Output | **82.9%** ⭐ | 0.477 | ~200K |
+| 1 | Input→256→Output | **82.9%** (best) | 0.477 | ~200K |
 | 2 | Input→256→256→Output | 81.8% | 0.476 | ~266K |
 | 3 | Input→256→256→256→Output | 81.4% | 0.509 | ~332K |
 
 **Key Insights**:
-1. ❌ Hypothesis REJECTED: Simpler network performed BEST!
+1. Hypothesis REJECTED: Simpler network performed BEST
 2. More parameters (332K vs 200K) did NOT help
 3. Additional layers added complexity without benefit
 4. Fashion MNIST is simple enough for shallow architecture
@@ -365,24 +365,24 @@ This journal documents the systematic exploration of hyperparameter effects on n
 - Good performance: 83.4%
 - Reached low loss quickly
 
-**lr_0.001** (OPTIMAL):
+**lr_0.001** (optimal):
 - Perfect balance of speed and stability
 - Smooth convergence, low final loss
 - **83.9%** accuracy
-- This is Adam's default for good reason!
+- This is Adam's default for good reason
 
 **lr_0.0005** (Slightly conservative):
 - Very smooth, perhaps too careful
 - Slightly slower progress per epoch
 - 82.1% - good but not optimal for 5 epochs
 
-**lr_0.0001** (TOO SLOW):
+**lr_0.0001** (too slow):
 - Barely moved from initialization
 - 5 epochs insufficient at this rate
 - 77.5% - significantly underperformed
 - Would need 20-50 epochs to match 0.001
 
-**lr_1e-05** (FAILURE):
+**lr_1e-05** (very poor performance):
 - Almost no learning occurred
 - Essentially stuck at initialization
 - 57.0% accuracy (barely better than random)
@@ -397,14 +397,14 @@ This journal documents the systematic exploration of hyperparameter effects on n
 | Learning Rate | Accuracy | Valid Loss | Observation |
 |--------------|----------|------------|-------------|
 | 0.01 | 81.1% | 0.511 | Unstable but functional |
-| 0.005 | 83.4% | 0.457 | Upper sweet spot |
-| 0.001 | **83.9%** ⭐ | 0.462 | Optimal |
+| 0.005 | 83.4% | 0.457 | Upper optimal range |
+| 0.001 | **83.9%** (best) | 0.462 | Optimal |
 | 0.0005 | 82.1% | 0.489 | Conservative |
 | 0.0001 | 77.5% | 0.631 | Too slow for 5 epochs |
-| 1e-05 | 57.0% | 1.666 | Failed to learn ⚠️ |
+| 1e-05 | 57.0% | 1.666 | Failed to learn |
 
 **Key Insights**:
-1. ✅ Hypothesis confirmed: 0.001 is optimal for Adam on this task
+1. Hypothesis confirmed: 0.001 is optimal for Adam on this task
 2. 10x change in LR can cause 26% accuracy difference (57% → 83%)
 3. Range of acceptable LRs is narrow: 0.001-0.005
 4. Too low is worse than too high (57% vs 81%)
@@ -450,12 +450,12 @@ This journal documents the systematic exploration of hyperparameter effects on n
 
 ### Observations During Training
 
-**optimizer_SGD** (CATASTROPHIC FAILURE):
+**optimizer_SGD** (complete failure):
 - Loss barely decreased from initialization
 - Appeared to be stuck in very poor local minimum
 - Network essentially learned nothing
 - **17.0%** accuracy (WORSE than random 10%)
-- This is a classification failure!
+- This is a classification failure
 
 **optimizer_Adam**:
 - Standard smooth training
@@ -469,7 +469,7 @@ This journal documents the systematic exploration of hyperparameter effects on n
 - **82.1%** accuracy
 - Best of the Adam family
 
-**optimizer_RMSprop** (SURPRISE WINNER):
+**optimizer_RMSprop** (best performance):
 - Excellent smooth convergence
 - Lowest final valid loss
 - **82.9%** accuracy
@@ -483,14 +483,14 @@ This journal documents the systematic exploration of hyperparameter effects on n
 
 | Optimizer | Accuracy | Valid Loss | Train Loss | Observation |
 |-----------|----------|------------|------------|-------------|
-| SGD | **17.0%** ⚠️ | 2.244 | 2.250 | Complete failure |
+| SGD | **17.0%** (failed) | 2.244 | 2.250 | Complete failure |
 | Adam | 80.8% | 0.515 | 0.455 | Reliable baseline |
 | AdamW | 82.1% | 0.486 | 0.457 | Weight decay helped |
-| RMSprop | **82.9%** ⭐ | 0.456 | 0.454 | Best performance |
+| RMSprop | **82.9%** (best) | 0.456 | 0.454 | Best performance |
 
 **Key Insights**:
-1. ✅ Hypothesis STRONGLY confirmed: Adaptive optimizers essential
-2. ❗ Shocking SGD failure: 17% is worse than random guessing!
+1. Hypothesis STRONGLY confirmed: Adaptive optimizers essential
+2. Shocking SGD failure: 17% is worse than random guessing
 3. RMSprop slight edge over Adam/AdamW
 4. All adaptive optimizers converged successfully
 
@@ -558,11 +558,11 @@ This journal documents the systematic exploration of hyperparameter effects on n
 - 83.8% accuracy
 - Solid but not exceeding epochs_10 alone (85.5%)
 
-**combined_config_2** (WINNER):
+**combined_config_2** (best performance):
 - Methodical, careful optimization
 - Lower LR with more epochs worked well
 - **84.2%** accuracy
-- Best combined configuration!
+- Best combined configuration
 - Train 0.423, Valid 0.443 (healthy gap)
 
 **combined_config_3**:
@@ -580,11 +580,11 @@ This journal documents the systematic exploration of hyperparameter effects on n
 | Config | Epochs | Batch | Units | LR | Optimizer | Accuracy |
 |--------|--------|-------|-------|-----|-----------|----------|
 | Config 1 | 10 | 32 | 512/256 | 0.001 | Adam | 83.8% |
-| Config 2 | 10 | 64 | 256/128 | 0.0005 | AdamW | **84.2%** ⭐ |
+| Config 2 | 10 | 64 | 256/128 | 0.0005 | AdamW | **84.2%** (best) |
 | Config 3 | 5 | 128 | 128/64 | 0.001 | Adam | 83.3% |
 
 **Key Insights**:
-1. ✅ Combined configs validated individual findings
+1. Combined configs validated individual findings
 2. Config 2 achieved best overall accuracy: 84.2%
 3. Did not exceed epochs_10 alone (85.5%), but that used 256/256 units
 4. Trade-offs: config_3 fastest, config_2 most accurate

@@ -1,6 +1,6 @@
 # Summary: RNN Hyperparameter Tuning for Gesture Recognition
 
-**Status**: ✅ **COMPLETED** - January 10, 2026
+**Status**: COMPLETED - January 10, 2026
 
 This project systematically designed and implemented RNN architectures for gesture recognition using the SmartWatch Gestures dataset. Comprehensive experiments tested GRU, LSTM, bidirectional, and hybrid Conv+RNN models to identify optimal configurations.
 
@@ -11,28 +11,28 @@ This project systematically designed and implemented RNN architectures for gestu
 - **Critical Insight**: GRU outperformed LSTM (99.2% vs 96.2%)
 - **Key Finding**: Architecture choice (+3-5%) matters more than hyperparameter tuning (+1-2%)
 
-## 🎯 Objectives
+## Objectives
 
-1. ✅ Design systematic RNN experiments for sequence classification
-2. ✅ Compare GRU vs LSTM architectures
-3. ✅ Optimize hidden size (64, 128, 256 units)
-4. ✅ Test network depth (1-2 layers)
-5. ✅ Evaluate dropout regularization (0.0-0.3)
-6. ✅ Implement bidirectional processing
-7. ✅ Test hybrid Conv1D+RNN architectures
-8. ✅ Track all experiments with MLflow
+1. Design systematic RNN experiments for sequence classification
+2. Compare GRU vs LSTM architectures
+3. Optimize hidden size (64, 128, 256 units)
+4. Test network depth (1-2 layers)
+5. Evaluate dropout regularization (0.0-0.3)
+6. Implement bidirectional processing
+7. Test hybrid Conv1D+RNN architectures
+8. Track all experiments with MLflow
 
 ## 📁 Project Files
 
 ### Core Experiment Files
 - [instructions.md](./instructions.md) - Project requirements and goals
-- **[experiment_journal.md](./experiment_journal.md)** - ✅ **NEW** - Detailed log of 14 experiments
+- **[experiment_journal.md](./experiment_journal.md)** - Detailed log of 14 experiments
 - **[rnn_experiments.py](./rnn_experiments.py)** - Systematic experiment runner with 8 experiments
 - **[analyze_rnn_results.py](./analyze_rnn_results.py)** - MLflow results analysis and visualization
 - **[monitor_progress.py](./monitor_progress.py)** - Real-time experiment progress tracker
 
 ### Reports & Documentation
-- **[report.md](./report.md)** - ✅ **COMPLETED** - Comprehensive technical report with actual results
+- **[report.md](./report.md)** - Comprehensive technical report with actual results
 - **[notebook.ipynb](./notebook.ipynb)** - Interactive exploration notebook
 
 ### Data & Results
@@ -40,7 +40,7 @@ This project systematically designed and implemented RNN architectures for gestu
 - **mlflow.db** - MLflow experiment tracking database
 - **gestures/** - Model checkpoints and training logs
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Run Experiments
 ```powershell
@@ -59,18 +59,18 @@ mlflow ui
 # Open http://localhost:5000
 ```
 
-## 📊 Experiments Designed (8 Total)
+## Experiments Designed (8 Total)
 
-1. ✅ **Baseline GRU** (3 configs) - Hidden sizes 64, 128, 256
-2. ✅ **Network Depth** (2 configs) - 1 vs 2 layers
-3. ✅ **Dropout Regularization** (3 configs) - Rates 0.0, 0.2, 0.3
-4. ✅ **LSTM vs GRU** (2 configs) - Architecture comparison
-5. ✅ **Bidirectional GRU** (1 config) - Forward + backward processing
-6. ✅ **Conv1D + GRU Hybrid** (1 config) - Feature extraction + sequence modeling
-7. ✅ **Deep GRU + LayerNorm** (1 config) - Enhanced stability
-8. ✅ **Optimal Configuration** (1 config) - Best hyperparameters combined
+1. **Baseline GRU** (3 configs) - Hidden sizes 64, 128, 256
+2. **Network Depth** (2 configs) - 1 vs 2 layers
+3. **Dropout Regularization** (3 configs) - Rates 0.0, 0.2, 0.3
+4. **LSTM vs GRU** (2 configs) - Architecture comparison
+5. **Bidirectional GRU** (1 config) - Forward + backward processing
+6. **Conv1D + GRU Hybrid** (1 config) - Feature extraction + sequence modeling
+7. **Deep GRU + LayerNorm** (1 config) - Enhanced stability
+8. **Optimal Configuration** (1 config) - Best hyperparameters combined
 
-## 🔍 Dataset
+## Dataset
 
 **SmartWatch Gestures Dataset**
 - **Classes:** 20 arm gestures
@@ -81,7 +81,7 @@ mlflow ui
 - **Challenge:** Variable-length sequences (10-50 timesteps)
 - **Source:** [TEV-FBK SmartWatch](https://tev.fbk.eu/resources/smartwatch)
 
-## 📈 Model Architectures Implemented
+## Model Architectures Implemented
 
 | Architecture | Description | Parameters | Actual Accuracy |
 |-------------|-------------|------------|-----------------|
@@ -91,7 +91,7 @@ mlflow ui
 | **Conv1DGRU** | Conv1D + GRU hybrid | 158K | 99.06% |
 | **DeepGRU** | GRU + LayerNorm | 252K | 99.53% |
 
-## 🎓 Key Concepts Explored
+## Key Concepts Explored
 
 - **Sequence Classification**: RNN architectures for time-series data
 - **GRU vs LSTM**: Gating mechanisms and memory cells
@@ -102,7 +102,7 @@ mlflow ui
 - **Regularization for RNNs**: Dropout between layers
 - **MLflow Tracking**: Comprehensive experiment management
 
-## 📊 Key Findings
+## Key Findings
 
 ### 1. GRU vs LSTM
 - **Winner:** GRU (99.2%)
@@ -112,24 +112,24 @@ mlflow ui
 
 ### 2. Hidden Size Impact
 - **64 units:** Underfitting (87.0%)
-- **128 units:** Excellent balance (96.7%) ⭐
+- **128 units:** Excellent balance (96.7%) (best efficiency)
 - **256 units:** Near perfect (99.2%)
-- **Insight:** 128 units is the efficiency sweet spot
+- **Insight:** 128 units is the efficiency optimal value
 
 ### 3. Network Depth
 - **1 Layer:** Strong performance (97.3%)
-- **2 Layers:** Improvement to 99.4% (+2.0%) ⭐
+- **2 Layers:** Improvement to 99.4% (+2.0%) (best)
 - **Insight:** 2 layers capture complex temporal features better
 
 ### 4. Dropout Regularization
 - **0.0:** Good baseline (97.8%)
-- **0.2:** Better generalization (98.9%) ⭐
+- **0.2:** Better generalization (98.9%) (best)
 - **0.3:** Highest stability (99.1%)
 - **Insight:** 0.2-0.3 prevents mild overfitting
 
 ### 5. Bidirectional Processing
 - **Unidirectional:** 99.2%
-- **Bidirectional:** 99.7% (+0.5% boost) ⭐
+- **Bidirectional:** 99.7% (+0.5% boost) (best)
 - **Trade-off:** 2× parameters, but highest accuracy
 - **Insight:** Worth it for offline classification tasks
 
@@ -138,7 +138,7 @@ mlflow ui
 - **Performance:** Excellent (99.1%) with very few parameters
 - **Insight:** Conv1D acts as efficient feature extractor
 
-## 🏆 Optimal Configuration
+## Optimal Configuration
 
 ```python
 # Best Model (Actual Result)
@@ -154,7 +154,7 @@ BidirectionalGRU(
 # Training: ~2 min on GPU
 ```
 
-## 🛠️ Technical Stack
+## Technical Stack
 
 - **PyTorch**: Deep learning framework
 - **MLflow**: Experiment tracking and model registry
@@ -162,7 +162,7 @@ BidirectionalGRU(
 - **mltrainer**: Training pipeline with built-in logging
 - **TensorBoard**: Real-time visualization
 
-## 💡 What Worked Well
+## What Worked Well
 
 ✅ **Modular Architecture Design**: Flexible model classes easy to configure  
 ✅ **MLflow Integration**: Comprehensive experiment tracking  
@@ -171,7 +171,7 @@ BidirectionalGRU(
 ✅ **Early Stopping**: Prevents overfitting automatically  
 ✅ **Multiple Architectures**: GRU, LSTM, Bidirectional, Conv+RNN all implemented  
 
-## 🚧 Challenges Encountered
+## Challenges Encountered
 
 1. **mltrainer GPU Support**: Library doesn't support CUDA device parameter
    - **Impact:** Experiments ran on CPU (slower)
@@ -185,7 +185,7 @@ BidirectionalGRU(
    - **Impact:** Some computational overhead
    - **Solution:** PaddedPreprocessor handles this transparently
 
-## 🔮 Future Improvements
+## Future Improvements
 
 - [ ] Implement GPU-accelerated training loop (bypass mltrainer)
 - [ ] Data augmentation (time warping, magnitude scaling)
@@ -196,7 +196,7 @@ BidirectionalGRU(
 - [ ] ONNX export for mobile deployment
 - [ ] Real-time inference optimization
 
-## 📚 Resources
+## Resources
 
 - [GRU Paper](https://arxiv.org/abs/1406.1078) - Cho et al., 2014
 - [LSTM Paper](https://www.bioinf.jku.at/publications/older/2604.pdf) - Hochreiter & Schmidhuber, 1997
@@ -204,7 +204,7 @@ BidirectionalGRU(
 - [PyTorch RNN Tutorial](https://pytorch.org/tutorials/intermediate/char_rnn_classification_tutorial.html)
 - [MLflow Documentation](https://mlflow.org/docs/latest/index.html)
 
-## 🎯 Lessons Learned
+## Lessons Learned
 
 1. **Architecture > Hyperparameters**: Choosing bidirectional (+3-5%) and 2 layers (+5-8%) matters more than fine-tuning dropout or LR (+1-2%)
 
@@ -228,15 +228,13 @@ BidirectionalGRU(
 | Depth | GRU-128, 2-layer | 99.38% | 153K | Depth helps (+2%) |
 | Dropout | Dropout 0.3 | 99.06% | - | Prevents overfitting |
 | LSTM vs GRU | LSTM-128 | 96.25% | 204K | GRU superior here |
-| Bidirectional | Bi-GRU-128 | **99.69%** | 403K | ⭐ Best overall |
+| Bidirectional | Bi-GRU-128 | **99.69%** | 403K | Best overall |
 | Conv+RNN | Conv1D+GRU | 99.06% | 158K | Very efficient |
 | LayerNorm | Deep GRU | 99.53% | 252K | Very stable |
 
 **Best Model**: Bidirectional GRU (128 hidden, 2 layers, dropout 0.2) → **99.69% accuracy**
 
 ---
-
-**Status**: ✅ Experimental framework complete, comprehensive documentation finished
 
 Find the [notebook](./notebook.ipynb) and the [instructions](./instructions.md)
 

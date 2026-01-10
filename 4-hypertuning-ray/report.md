@@ -56,7 +56,7 @@ This study addresses three primary questions:
   - Early stopping for poorly performing trials
   - Resource allocation: 10 max epochs, grace period 2 epochs
 - **Search Algorithm**: HyperOpt (Bayesian optimization)
-- **Number of Trials**: [N]
+- **Number of Trials**: 10
 - **GPU Utilization**: 0.5 GPU per trial (2 parallel trials)
 
 ### 1.3 Hypotheses
@@ -95,7 +95,7 @@ This study addresses three primary questions:
 
 **Findings**:
 - **2 layers**: Mean accuracy 40.7% (3 trials: 25.3%, 40.2%, 41.1%)
-- **3 layers**: Mean accuracy 46.5% (5 trials: range 29.2% to **68.5%**) ⭐ BEST
+- **3 layers**: Mean accuracy 46.5% (5 trials: range 29.2% to **68.5%**) (BEST)
 - **4 layers**: Mean accuracy 49.3% (1 trial only)
 
 **Analysis**: 3 layers provided best balance. The winning trial had 3 layers. 4 layers showed potential (49.3%) but limited data. Deeper isn't always better for this dataset size.
@@ -104,7 +104,7 @@ This study addresses three primary questions:
 
 **Findings**:
 - **16 filters**: Mean 40.2% (2 trials: 40.2%, 49.3%)
-- **32 filters**: Mean 48.9% (5 trials: 29.2% to **68.5%**) ⭐ WINNER
+- **32 filters**: Mean 48.9% (5 trials: 29.2% to **68.5%**) (BEST)
 - **64 filters**: Mean 41.8% (3 trials: 25.3%, 42.4%, 64.0%)
 
 **Analysis**: **32 filters optimal** - best trial used 32. Starting too small (16) limited capacity, too large (64) may have caused overfitting or slower convergence.
@@ -117,7 +117,7 @@ This study addresses three primary questions:
 - Too high (>0.005): 29.2% and 49.3% accuracy
 - Too low (<0.0002): 25.3% and 40.2% accuracy
 
-**Analysis**: **Sweet spot ~5e-4**. Adam optimizer works well in 1e-4 to 1e-3 range. Very low LR caused slow learning; very high LR caused instability.
+**Analysis**: **Optimal range ~5e-4**. Adam optimizer works well in 1e-4 to 1e-3 range. Very low LR caused slow learning; very high LR caused instability.
 
 #### 2.2.4 Dropout Rate
 
@@ -181,19 +181,19 @@ All visualizations are available in `visualizations/`:
 
 ### 4.1 Hypothesis Validation
 
-**H1 (Network Depth)**: ❌ **REJECTED**
+**H1 (Network Depth)**: REJECTED
 - Evidence: 3 layers achieved 68.5%; 4 layers only 49.3%; 2 layers 25-41%
 - Explanation: Flowers dataset (3670 images) doesn't need very deep networks. Moderate depth balances capacity and overfitting risk.
 
-**H2 (Filter Size)**: ✅ **CONFIRMED (Modified)**
+**H2 (Filter Size)**: CONFIRMED (Modified)
 - Evidence: 32 filters outperformed both 16 and 64
-- Explanation: 16 filters = insufficient capacity; 64 filters = potential overfitting with limited data. Sweet spot at 32.
+- Explanation: 16 filters = insufficient capacity; 64 filters = potential overfitting with limited data. Optimal value at 32.
 
-**H3 (Dropout)**: ✅ **CONFIRMED**
+**H3 (Dropout)**: CONFIRMED
 - Evidence: Best configs used 0.15-0.19 dropout
 - Explanation: Light regularization prevented overfitting without hurting model capacity. High dropout (>0.4) degraded performance.
 
-**H4 (Learning Rate)**: ✅ **STRONGLY CONFIRMED**
+**H4 (Learning Rate)**: STRONGLY CONFIRMED
 - Evidence: Best LR 4.7e-4; second best 2.4e-4; extremes (<1e-4 or >5e-3) failed
 - Explanation: Adam optimizer's adaptive rates work best in 1e-4 to 1e-3 range for this architecture. Matches theory.
 
@@ -264,7 +264,7 @@ optimal_config = {
 
 1. **Moderate architectures excel on small datasets**: 3-layer, 32-filter CNN outperformed deeper/wider networks. With only 3670 images, excessive capacity causes overfitting.
 
-2. **Learning rate is critical**: 40% performance variance attributed to LR alone. Optimal ~5e-4 for Adam with this architecture.
+2. **Learning rate is critical**: 40% performance variance attributed to LR alone. Optimal range ~5e-4 for Adam with this architecture.
 
 3. **ASHA + HyperOpt is highly efficient**: Found better result (68.5%) with 10 trials than Grid Search (60%) with 48 trials - **80% fewer trials, 14% better accuracy**.
 
@@ -280,15 +280,6 @@ optimal_config = {
 - Test larger image sizes (256x256 or 384x384) if GPU memory allows
 - Explore batch_size=16 more thoroughly (only 2 trials tested)
 - Compare ensemble of top 3 models vs. single best model
-
----
-
-## 6. References
-
-1. Li, L., et al. (2020). "A System for Massively Parallel Hyperparameter Tuning" - ASHA Paper
-2. Bergstra, J., et al. (2013). "Making a Science of Model Search: Hyperparameter Optimization in Hundreds of Dimensions"
-3. Goodfellow, I., Bengio, Y., & Courville, A. (2016). "Deep Learning" - Chapters 7-9
-4. Ray Tune Documentation: https://docs.ray.io/en/latest/tune/
 
 ---
 

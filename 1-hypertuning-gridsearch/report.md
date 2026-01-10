@@ -25,27 +25,27 @@ This report presents findings from systematic hyperparameter tuning experiments 
 
 **Hypothesis 1: Epochs**
 - **Prediction**: Increasing epochs will improve model performance up to a point
-- **Result**: ✅ **CONFIRMED** - 3 epochs: 79.5%, 5 epochs: 83.6%, 10 epochs: 85.5%
+- **Result**: CONFIRMED - 3 epochs: 79.5%, 5 epochs: 83.6%, 10 epochs: 85.5%
 
 **Hypothesis 2: Hidden Units**
 - **Prediction**: Larger networks will perform better with diminishing returns
-- **Result**: ✅ **PARTIALLY CONFIRMED** - Best was 128/512 (83.5%), but 16/16 still achieved 79.0%
+- **Result**: PARTIALLY CONFIRMED - Best was 128/512 (83.5%), but 16/16 still achieved 79.0%
 
 **Hypothesis 3: Batch Size**
 - **Prediction**: Medium batch sizes (32-64) will be optimal
-- **Result**: ✅ **CONFIRMED** - Batch 64: 83.6%, Batch 128: 84.4%, but Batch 4: 73.8%
+- **Result**: CONFIRMED - Batch 64: 83.6%, Batch 128: 84.4%, but Batch 4: 73.8%
 
 **Hypothesis 4: Model Depth**
 - **Prediction**: One additional layer will help, deeper may not
-- **Result**: ❌ **REJECTED** - Depth 1: 82.9%, Depth 2: 81.8%, Depth 3: 81.4% (simpler was better!)
+- **Result**: REJECTED - Depth 1: 82.9%, Depth 2: 81.8%, Depth 3: 81.4% (simpler was better)
 
 **Hypothesis 5: Learning Rate**
 - **Prediction**: 1e-3 to 1e-4 will be optimal
-- **Result**: ✅ **CONFIRMED** - LR 0.001: 83.9%, LR 0.0001: 77.5%, LR 1e-5: 57.0%
+- **Result**: CONFIRMED - LR 0.001: 83.9%, LR 0.0001: 77.5%, LR 1e-5: 57.0%
 
 **Hypothesis 6: Optimizer**
 - **Prediction**: Adam/AdamW will outperform SGD
-- **Result**: ✅ **STRONGLY CONFIRMED** - SGD: 17.0%, Adam: 80.8%, AdamW: 82.1%, RMSprop: 82.9%
+- **Result**: STRONGLY CONFIRMED - SGD: 17.0%, Adam: 80.8%, AdamW: 82.1%, RMSprop: 82.9%
 
 ---
 
@@ -123,7 +123,7 @@ This report presents findings from systematic hyperparameter tuning experiments 
 | depth_3 | 3 | 81.4% | 0.509 | Slight overfitting |
 
 **Analysis**: 
-- **Surprising result**: Single hidden layer performed BEST
+- Unexpected result: Single hidden layer performed BEST
 - Additional layers added complexity without benefit
 - Fashion MNIST is simple enough for shallow architecture
 - This contradicts initial hypothesis but aligns with Occam's razor
@@ -142,10 +142,10 @@ This report presents findings from systematic hyperparameter tuning experiments 
 | lr_1e-05 | 0.00001 | 57.0% | 1.666 | Failed to learn |
 
 **Analysis**:
-- Clear sweet spot at 0.001-0.005
+- Clear optimal range at 0.001-0.005
 - LR 0.0001 and below: insufficient learning in 5 epochs
 - LR 0.01: some instability but still functional
-- 10x difference in learning rate can mean 26% accuracy difference!
+- 10x difference in learning rate can mean 26% accuracy difference
 
 ![Learning Rate Impact](visualizations/learning_rate_scatter.png)
 
@@ -190,7 +190,7 @@ This report presents findings from systematic hyperparameter tuning experiments 
 ### Most Impactful Hyperparameters (Ranked)
 
 1. **Optimizer** (17.0% → 82.9%): 65.9% swing - SGD catastrophic, adaptive optimizers essential
-2. **Learning Rate** (57.0% → 83.9%): 26.9% swing - Must be in goldilocks zone
+2. **Learning Rate** (57.0% → 83.9%): 26.9% swing - Must be in optimal range
 3. **Batch Size** (70.5% → 84.4%): 13.9% swing - Small batches hurt significantly
 4. **Epochs** (79.5% → 85.5%): 6.0% swing - Clear improvement but diminishing returns
 5. **Hidden Units** (79.0% → 84.5%): 5.5% swing - Model capacity matters moderately

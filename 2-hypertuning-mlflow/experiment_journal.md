@@ -195,9 +195,9 @@ BatchNorm + moderate dropout will provide best results. High dropout without Bat
 
 | Dropout | BatchNorm | Train Acc | Val Acc | Best? |
 |---------|-----------|-----------|---------|-------|
-| 0.0     | True      | ~92.8%    | 92.13%  | ⭐     |
+| 0.0     | True      | ~92.8%    | 92.13%  | (best)     |
 | 0.0     | False     | ~91.9%    | 91.29%  |       |
-| 0.5     | True      | ~92.6%    | 92.15%  | ⭐     |
+| 0.5     | True      | ~92.6%    | 92.15%  | (best)     |
 | 0.5     | False     | ~92.4%    | 91.42%  |       |
 
 **Best Combination:** BatchNorm=True (dropout matters less)
@@ -240,9 +240,9 @@ Combining insights from previous experiments will yield best overall performance
 
 | Config | Description | Train Acc | Val Acc | Params | Best? |
 |--------|-------------|-----------|---------|--------|-------|
-| A      | Shallow, dropout=0.3 | ~93.1% | 92.51% | 422K | ⭐⭐⭐ |
-| B      | Deep 3-layer | ~92.7% | 92.25% | 1.1M | ⭐⭐ |
-| C      | High dropout=0.7 | ~92.6% | 92.25% | 422K | ⭐⭐ |
+| A      | Shallow, dropout=0.3 | ~93.1% | 92.51% | 422K | (best) |
+| B      | Deep 3-layer | ~92.7% | 92.25% | 1.1M | (good) |
+| C      | High dropout=0.7 | ~92.6% | 92.25% | 422K | (good) |
 
 **Winner:** Config A (Shallow Optimal) with 92.51% validation accuracy
 

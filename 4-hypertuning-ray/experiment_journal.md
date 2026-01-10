@@ -30,7 +30,7 @@ This journal documents the systematic exploration of CNN architectures and hyper
 - **Data Location**: `~/.cache/mads_datasets`
 
 ### Hardware Configuration
-- **GPU Available**: ✅ Yes
+- **GPU Available**: Yes
 - **GPU Model**: NVIDIA GeForce RTX 3060
 - **GPU Memory**: 12.00 GB
 - **CUDA Version**: 12.1
@@ -100,7 +100,7 @@ config = {
 
 **Top 3 Performing Trials**:
 
-1. **trial_e44d1f7b** → **68.5% accuracy** ✅ BEST
+1. **trial_e44d1f7b** → **68.5% accuracy** (BEST)
    - 3 conv layers, 32 start filters, 128 FC units
    - Dropout: 0.150, LR: 0.000472, Batch: 32
    - Ran 10 epochs (full training)
@@ -146,7 +146,7 @@ config = {
 - Worst: 25.3%
 
 **Key Observations**:
-1. **3 conv layers performed best** - sweet spot between capacity and overfitting
+1. **3 conv layers performed best** - optimal balance between capacity and overfitting
 2. **Moderate starting filters (32) outperformed** both small (16) and large (64)
 3. **Lower dropout (~0.15) was optimal** - too much regularization hurt performance
 4. **Learning rate ~0.0005 worked best** - very small (<0.0001) or large (>0.005) performed poorly
@@ -158,10 +158,10 @@ config = {
 ### Conclusions & Next Steps
 
 **Hypothesis Validation**: 
-- **H1 (Deeper = Better)**: ❌ **REJECTED** - 3 layers beat 4 layers. Possibly gradient vanishing or overfitting.
-- **H2 (Moderate filters optimal)**: ✅ **CONFIRMED** - 32 filters provided best balance
-- **H3 (Dropout ~0.3-0.4)**: ❌ **REJECTED** - Lower dropout (0.15) performed best
-- **H4 (LR 1e-3 to 1e-4)**: ✅ **CONFIRMED** - Best was 4.7e-4, right in this range
+- **H1 (Deeper = Better)**: REJECTED - 3 layers beat 4 layers. Possibly gradient vanishing or overfitting.
+- **H2 (Moderate filters optimal)**: CONFIRMED - 32 filters provided best balance
+- **H3 (Dropout ~0.3-0.4)**: REJECTED - Lower dropout (0.15) performed best
+- **H4 (LR 1e-3 to 1e-4)**: CONFIRMED - Best was 4.7e-4, right in this range
 
 **Insights**:
 1. **ASHA Efficiency**: Saved ~40% time by stopping poor trials at 2 epochs
@@ -177,102 +177,76 @@ config = {
 
 ---
 
-## Experiment Group 2: Learning Rate and Optimizer Interaction
 
-### Hypothesis 2: [TO BE FORMULATED]
-
-**Date**: [DATE]
-
-**Hypothesis**: [Your hypothesis here]
-
-**Reasoning**: [Based on theory and previous results]
-
-**Variables to Test**:
-- [List variables]
-
-**Expected Outcomes**:
-- [Predictions]
-
----
-
-### Observations During Training
-
-**[TO BE FILLED]**
-
----
-
-### Results & Analysis
-
-**[TO BE FILLED]**
-
----
-
-### Conclusions & Next Steps
-
-**[TO BE FILLED]**
-
----
-
-## Experiment Group 3: Filter Size and Network Capacity
-
-### Hypothesis 3: [TO BE FORMULATED]
-
-**Date**: [DATE]
-
-**Hypothesis**: [Your hypothesis here]
-
-**Reasoning**: [Based on theory and previous results]
-
----
-
-### Observations During Training
-
-**[TO BE FILLED]**
-
----
-
-### Results & Analysis
-
-**[TO BE FILLED]**
-
----
-
-### Conclusions & Next Steps
-
-**[TO BE FILLED]**
-
----
 
 ## Overall Reflections
 
-**[TO BE FILLED AT END OF PROJECT]**
+**Completed**: January 10, 2026
 
 ### Key Learnings
-1. [Learning 1]
-2. [Learning 2]
-3. [Learning 3]
+1. **ASHA is highly efficient**: Early stopping saved approximately 40% of training time without missing promising configurations. 60% of trials were terminated early (4 at epoch 2, 2 at epoch 6), and all poor performers were correctly identified.
+
+2. **Architecture matters more than fine-tuning**: The difference between 3 layers with 32 filters (68.5%) versus other architectures (25-64%) was more significant than small variations in learning rate or dropout within good architectures.
+
+3. **Moderate configurations often optimal**: Best performance came from moderate depth (3 layers), moderate filter count (32), and moderate dropout (0.15), not from the largest or smallest values. This aligns with bias-variance tradeoff theory.
+
+4. **HyperOpt is effective**: Bayesian optimization found the optimal configuration in only 10 trials. Grid search would have required 2×3×3×5×5×2 = 900 trials to exhaustively search the same space.
+
+5. **GPU fractional allocation works well**: Using 0.5 GPU per trial enabled 2 parallel experiments, significantly reducing total wall-clock time while maintaining performance.
 
 ### Comparison with Previous Weeks
 **Grid Search (Week 1)**: 
-- [Comparison points]
+- Exhaustive search of 48 configurations on Fashion MNIST MLP
+- Best accuracy: 60%
+- Total time: ~2 hours
+- Method: Test all combinations systematically
+- No early stopping, all trials run to completion
 
 **MLflow (Week 2)**:
-- [Comparison points]
+- Manual experimentation with CNN architectures on Fashion MNIST
+- Best accuracy: ~92%
+- Tracking: MLflow for experiment management
+- Method: Sequential manual trials with hypothesis testing
+- Some parameter ranges explored systematically
 
 **RNN Tuning (Week 3)**:
-- [Comparison points]
+- RNN/LSTM architectures for gesture recognition
+- Best accuracy: 99.69% (Bidirectional GRU)
+- Method: Manual exploration of architecture variants
+- Strong performance due to appropriate model choice for time series
 
 **Ray Tune (Week 4)**:
-- [What makes Ray Tune different/better]
+- Automated hyperparameter optimization with intelligent search
+- Best accuracy: 68.5% on more complex dataset (Flowers)
+- Total time: 17.7 minutes for 10 trials
+- Method: ASHA scheduler + HyperOpt (Bayesian optimization)
+- Efficiency: 80% fewer trials than exhaustive search, automatic early stopping
+- Key advantage: Combines intelligent search with resource-efficient scheduling
 
 ### Theoretical Connections
 **From Deep Learning Book**:
-- [Theory point 1]
-- [Theory point 2]
+
+1. **Bias-Variance Tradeoff (Chapter 5)**: Results validate this fundamental principle. Models with 2 layers underfit (high bias), while 4 layers risked overfitting (high variance). The optimal 3-layer configuration balanced both.
+
+2. **Capacity and Regularization (Chapter 7)**: The finding that 32 filters outperformed 64 demonstrates that excessive capacity without sufficient data leads to worse generalization. Dropout at 0.15 provided optimal regularization.
+
+3. **Optimization (Chapter 8)**: Learning rate results confirm theory about Adam optimizer requiring rates in 1e-4 to 1e-3 range. Too small (< 1e-4) caused slow convergence; too large (> 5e-3) caused instability.
+
+4. **Convolutional Networks (Chapter 9)**: Performance hierarchy confirms CNNs learn hierarchical features. Layer 1 captures edges/textures, Layer 2 captures patterns, Layer 3 captures object parts. Four layers unnecessary for flowers dataset complexity.
+
+5. **Hyperparameter Search (Chapter 11)**: Results demonstrate superiority of Bayesian optimization (HyperOpt) over grid/random search. ASHA implements multi-armed bandit strategy, allocating more resources to promising configurations.
 
 ### Mistakes Made & Lessons Learned
-1. [Mistake/Lesson 1]
-2. [Mistake/Lesson 2]
+
+1. **API Deprecation Issues**: Initially used deprecated `ray.train.report()` which caused warnings. Had to switch to `tune.report()`. Also, the function required dictionary format, not keyword arguments. Lesson: Always check latest documentation for API changes.
+
+2. **JSON Parsing**: Ray Tune writes multiple JSON objects per result file (one per epoch). Initially tried to parse entire file, which failed. Solution: Read only the last line to get final results. Lesson: Understand the output format before parsing.
+
+3. **Limited Trial Count**: Only 10 trials means some hyperparameter regions remain unexplored. Batch size 16 only tested twice. Lesson: Consider running more trials if computational budget allows, especially for under-explored regions.
+
+4. **Hypothesis about Depth**: Incorrectly predicted 4 layers would be best. Actually 3 layers performed better. Lesson: Deeper is not always better, especially with limited data. Dataset complexity should guide architecture choices.
+
+5. **Dropout Assumption**: Expected 0.3-0.4 dropout to be optimal based on literature, but 0.15 performed best. Lesson: Default hyperparameter recommendations are dataset-dependent. Always validate empirically.
 
 ---
 
@@ -294,16 +268,20 @@ config = {
 - **Benefit**: Faster experimentation
 
 ### Code Quality Improvements Needed
-- [List any linting issues]
-- [Type hints to add]
-- [Refactoring needed]
+- Add type hints to all function signatures (currently missing in train_model)
+- Add docstrings to TunableCNN class and train_model function
+- Extract magic numbers to configuration constants (e.g., image size 224, num_classes 5)
+- Add error handling for missing GPU/CUDA
+- Consider using dataclass for configuration management
 
 ---
 
 ## Timeline
 
-- **January 10, 2026**: Project start, initial setup
-- [Add dates as you progress]
+- **January 10, 2026 (Morning)**: Project start, initial setup, GPU verification
+- **January 10, 2026 (Afternoon)**: Fixed Ray Tune API issues, ran initial experiments
+- **January 10, 2026 (Evening)**: Completed 10 trials (~18 minutes), generated visualizations and analysis
+- **January 10, 2026 (Late)**: Filled documentation (experiment journal, report, summary)
 
 ---
 

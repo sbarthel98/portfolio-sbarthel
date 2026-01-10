@@ -1,6 +1,6 @@
 # Summary: Hyperparameter Tuning with Grid Search
 
-**Status**: ✅ **COMPLETED** - January 5, 2026
+**Status**: COMPLETED - January 5, 2026
 
 This project successfully executed 61 systematic hyperparameter tuning experiments on a neural network trained on the Fashion MNIST dataset. All experiments, analysis, visualizations, and comprehensive reports are complete.
 
@@ -11,14 +11,14 @@ This project successfully executed 61 systematic hyperparameter tuning experimen
 - **Critical Insight**: Vanilla SGD failed completely (17% accuracy)
 - **Surprise Finding**: Shallow networks (1 layer) beat deeper ones
 
-## 🎯 Objectives
+## Objectives
 
-1. ✅ Experiment with various hyperparameters (epochs, units, batch size, depth, learning rate, optimizer)
-2. ✅ Analyze and visualize the relationships between hyperparameters
-3. ✅ Reflect on findings using the scientific method (hypothesis → experiment → analysis → conclusion)
-4. ✅ Create data-driven reports documenting insights and recommendations
+1. Experiment with various hyperparameters (epochs, units, batch size, depth, learning rate, optimizer)
+2. Analyze and visualize the relationships between hyperparameters
+3. Reflect on findings using the scientific method (hypothesis → experiment → analysis → conclusion)
+4. Create data-driven reports documenting insights and recommendations
 
-## 📁 Project Files
+## Project Files
 
 ### Core Experiment Files
 - [instructions.md](./instructions.md) - Detailed experiment instructions and study questions
@@ -30,15 +30,15 @@ This project successfully executed 61 systematic hyperparameter tuning experimen
 - **[run_experiments.ps1](./run_experiments.ps1)** - Interactive PowerShell menu for experiment management
 
 ### Report Templates & Completed Reports
-- **[report.md](./report.md)** - ✅ **COMPLETED** - Full technical report with all findings
-- **[experiment_journal.md](./experiment_journal.md)** - ✅ **COMPLETED** - Detailed experiment journal
+- **[report.md](./report.md)** - COMPLETED - Full technical report with all findings
+- **[experiment_journal.md](./experiment_journal.md)** - COMPLETED - Detailed experiment journal
 
 ### Legacy
 - [notebook.ipynb](./notebook.ipynb) - Original interactive notebook (reference only)
 - [model.toml](./model.toml) - Configuration file
 - [settings.toml](./settings.toml) - Settings file
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Option 1: Use the Interactive Menu
 ```powershell
@@ -58,17 +58,17 @@ python analyze_results.py
 tensorboard --logdir=modellogs
 ```
 
-## 📊 Experiments Completed (61 Total)
+## Experiments Completed (61 Total)
 
-1. ✅ **Epochs** (3 configs) - Training duration impact: 79.5% → 85.5%
-2. ✅ **Hidden Units** (36 configs) - Network capacity exploration: 79.0% → 84.5%
-3. ✅ **Batch Size** (6 configs) - Training dynamics: 70.5% → 84.4%
-4. ✅ **Model Depth** (3 configs) - Architecture complexity: Depth 1 won!
-5. ✅ **Learning Rate** (6 configs) - Optimization sensitivity: 57.0% → 83.9%
-6. ✅ **Optimizers** (4 configs) - Algorithm comparison: SGD failed, RMSprop won
-7. ✅ **Combined Configurations** (3 configs) - Optimal combinations: 84.2% best
+1. **Epochs** (3 configs) - Training duration impact: 79.5% → 85.5%
+2. **Hidden Units** (36 configs) - Network capacity exploration: 79.0% → 84.5%
+3. **Batch Size** (6 configs) - Training dynamics: 70.5% → 84.4%
+4. **Model Depth** (3 configs) - Architecture complexity: Depth 1 won
+5. **Learning Rate** (6 configs) - Optimization sensitivity: 57.0% → 83.9%
+6. **Optimizers** (4 configs) - Algorithm comparison: SGD failed, RMSprop won
+7. **Combined Configurations** (3 configs) - Optimal combinations: 84.2% best
 
-## 🔍 Key Concepts Explored
+## Key Concepts Explored
 
 - **Grid Search**: Systematic exploration of hyperparameter space
 - **Factors of 2**: Efficient parameter scanning strategy
@@ -77,29 +77,29 @@ tensorboard --logdir=modellogs
 - **Overfitting vs Underfitting**: Balancing model capacity
 - **Convergence**: Finding optimal learning dynamics
 
-## 📈 Deliverables (All Complete!)
+## Deliverables (All Complete)
 
-1. ✅ **Experiment logs** in `modellogs/` (61 directories) with TensorBoard event files
-2. ✅ **TOML result files** with extracted metrics (train/valid loss, accuracy)
-3. ✅ **Visualization plots** in `visualizations/` (heatmaps, scatter plots, summaries)
-4. ✅ **Summary data** in `experiment_summary.csv` (61 rows with full metrics)
-5. ✅ **Comprehensive report** in `REPORT_FILLED.md` (all study questions answered)
-6. ✅ **Experiment journal** in `EXPERIMENT_JOURNAL_FILLED.md` (scientific documentation)
-7. ✅ **Metric extraction** from TensorBoard logs via `extract_tensorboard_metrics.py`
+1. **Experiment logs** in `modellogs/` (61 directories) with TensorBoard event files
+2. **TOML result files** with extracted metrics (train/valid loss, accuracy)
+3. **Visualization plots** in `visualizations/` (heatmaps, scatter plots, summaries)
+4. **Summary data** in `experiment_summary.csv` (61 rows with full metrics)
+5. **Comprehensive report** in `REPORT_FILLED.md` (all study questions answered)
+6. **Experiment journal** in `EXPERIMENT_JOURNAL_FILLED.md` (scientific documentation)
+7. **Metric extraction** from TensorBoard logs via `extract_tensorboard_metrics.py`
 
-## 🎓 Study Questions (All Answered in REPORT_FILLED.md)
+## Study Questions (All Answered in REPORT_FILLED.md)
 
-- ✅ What is the upside and downside of increasing epochs?
-- ✅ When do you need more epochs to find the best configuration?
-- ✅ What are the advantages and disadvantages of using factors of 2?
-- ✅ How do hyperparameters interact with each other?
-- ✅ Why did SGD fail so catastrophically?
-- ✅ What is the optimal learning rate for Adam optimizer?
-- ✅ Why do asymmetric network architectures work well?
+- What is the upside and downside of increasing epochs?
+- When do you need more epochs to find the best configuration?
+- What are the advantages and disadvantages of using factors of 2?
+- How do hyperparameters interact with each other?
+- Why did SGD fail so catastrophically?
+- What is the optimal learning rate for Adam optimizer?
+- Why do asymmetric network architectures work well?
 
 **See [REPORT_FILLED.md](./REPORT_FILLED.md) for complete answers with data and analysis.**
 
-## 🛠️ Technical Stack
+## Technical Stack
 
 - **PyTorch**: Deep learning framework
 - **mads-datasets**: Fashion MNIST data loading
@@ -108,16 +108,16 @@ tensorboard --logdir=modellogs
 - **tomlserializer**: Configuration management
 - **Matplotlib/Seaborn**: Results visualization
 
-## 📚 Resources
+## Resources
 
 - [TensorBoard Guide](https://www.tensorflow.org/tensorboard)
 - [PyTorch Optimizers](https://pytorch.org/docs/stable/optim.html)
 - [Fashion MNIST Dataset](https://github.com/zalandoresearch/fashion-mnist)
 - [Grid Search Best Practices](https://scikit-learn.org/stable/modules/grid_search.html)
 
-## 💡 Next Steps
+## Next Steps
 
-✅ **This exercise is complete!** You now understand:
+This exercise is complete. You now understand:
 1. Why grid search is "naive" (exhaustive but inefficient - we ran 61 experiments)
 2. The massive importance of optimizer and learning rate choices
 3. How to systematically test hyperparameters
@@ -128,7 +128,7 @@ tensorboard --logdir=modellogs
 2. [RNN hypertuning](../3-hypertuning-rnn/) - Sequence models
 3. [Ray Tune](../4-hypertuning-ray/) - Efficient automated hyperparameter optimization
 
-## 📊 Quick Results Reference
+## Quick Results Reference
 
 | Experiment | Best Config | Accuracy | Key Finding |
 |-----------|-------------|----------|-------------|

@@ -1,6 +1,6 @@
 # Summary: MLflow Hyperparameter Tuning with CNNs
 
-**Status**: ✅ **COMPLETED** - January 7, 2026
+**Status**: COMPLETED - January 7, 2026
 
 This project successfully executed 19 systematic CNN hyperparameter tuning experiments on Fashion MNIST using MLflow experiment tracking. All experiments, analysis, visualizations, and comprehensive documentation are complete.
 
@@ -12,17 +12,17 @@ This project successfully executed 19 systematic CNN hyperparameter tuning exper
 - **Critical Insight**: BatchNorm > Dropout for regularization
 - **Surprise Finding**: Deeper networks (3 layers) show diminishing returns
 
-## 🎯 Objectives
+## Objectives
 
-1. ✅ Investigate dropout regularization impact (0.0 to 0.7)
-2. ✅ Evaluate batch normalization effectiveness
+1. Investigate dropout regularization impact (0.0 to 0.7)
+2. Evaluate batch normalization effectiveness
 3. ✅ Explore convolutional depth trade-offs (1-3 layers)
 4. ✅ Test pooling layer impact on performance
 5. ✅ Analyze hyperparameter interactions (dropout × BatchNorm)
 6. ✅ Identify optimal combined configuration
 7. ✅ Track all experiments with MLflow for reproducibility
 
-## 📁 Project Files
+## Project Files
 
 ### Core Experiment Files
 - [instructions.md](./instructions.md) - Detailed experiment instructions and study questions
@@ -33,13 +33,13 @@ This project successfully executed 19 systematic CNN hyperparameter tuning exper
 - **[run_experiments.ps1](./run_experiments.ps1)** - Interactive PowerShell menu for experiment management
 
 ### Reports & Documentation
-- **[report_template.md](./report.md)** - ✅ **COMPLETED** - Full technical report with findings
-- **[experiment_journal.md](./experiment_journal.md)** - ✅ **COMPLETED** - Detailed scientific experiment journal
+- **[report_template.md](./report.md)** - COMPLETED - Full technical report with findings
+- **[experiment_journal.md](./experiment_journal.md)** - COMPLETED - Detailed scientific experiment journal
 
 ### Configuration
 - Settings files for model configuration and experiment parameters
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Option 1: Use the Interactive Menu
 ```powershell
@@ -69,16 +69,16 @@ mlflow ui
 # Then open: http://localhost:5000
 ```
 
-## 📊 Experiments Completed (19 Total)
+## Experiments Completed (19 Total)
 
-1. ✅ **Dropout Rate** (5 configs) - 0.0, 0.2, 0.3, 0.5, 0.7 → Optimal: 0.3
-2. ✅ **Batch Normalization** (2 configs) - With/Without → +0.14% improvement
-3. ✅ **Convolutional Depth** (3 configs) - 1, 2, 3 layers → Optimal: 2 layers
-4. ✅ **Pooling Strategy** (2 configs) - MaxPool vs None → 15% param reduction
-5. ✅ **Interactions** (4 configs) - Dropout × BatchNorm factorial → BatchNorm dominant
-6. ✅ **Combined Optimal** (3 configs) - Best combinations → 92.51% winner
+1. **Dropout Rate** (5 configs) - 0.0, 0.2, 0.3, 0.5, 0.7 → Optimal: 0.3
+2. **Batch Normalization** (2 configs) - With/Without → +0.14% improvement
+3. **Convolutional Depth** (3 configs) - 1, 2, 3 layers → Optimal: 2 layers
+4. **Pooling Strategy** (2 configs) - MaxPool vs None → 15% param reduction
+5. **Interactions** (4 configs) - Dropout × BatchNorm factorial → BatchNorm dominant
+6. **Combined Optimal** (3 configs) - Best combinations → 92.51% winner
 
-## 🔍 Key Concepts Explored
+## Key Concepts Explored
 
 - **MLflow Tracking**: Experiment versioning, metric logging, parameter tracking
 - **CNN Architecture Design**: Flexible ModuleList-based construction
@@ -88,21 +88,21 @@ mlflow ui
 - **GPU Acceleration**: CUDA-enabled PyTorch training (RTX 3060)
 - **Progress Monitoring**: Real-time tqdm progress bars
 
-## 📈 Deliverables (All Complete!)
+## Deliverables (All Complete)
 
-1. ✅ **MLflow tracking** in `./mlruns` (19 experiment runs with full metrics)
-2. ✅ **Experiment summary CSV** with all results and configurations
-3. ✅ **Visualization plots** in `visualizations/` (5 PNG files)
+1. **MLflow tracking** in `./mlruns` (19 experiment runs with full metrics)
+2. **Experiment summary CSV** with all results and configurations
+3. **Visualization plots** in `visualizations/` (5 PNG files)
    - dropout_impact.png
    - batchnorm_comparison.png
    - conv_depth_impact.png
    - interactions_heatmap.png
    - top_configurations.png
-4. ✅ **Comprehensive technical report** in `report_template.md` (all sections filled)
-5. ✅ **Scientific experiment journal** in `experiment_journal.md` (19 experiments documented)
-6. ✅ **Analysis scripts** for reproducible results generation
+4. **Comprehensive technical report** in `report_template.md` (all sections filled)
+5. **Scientific experiment journal** in `experiment_journal.md` (19 experiments documented)
+6. **Analysis scripts** for reproducible results generation
 
-## 🎓 Key Findings
+## Key Findings
 
 ### 1. Dropout Impact
 - **Optimal Rate**: 0.3 (92.28% val accuracy)
@@ -118,7 +118,7 @@ mlflow ui
 
 ### 3. Convolutional Depth
 - **1 Layer**: 90.57% accuracy, 52K params - insufficient capacity
-- **2 Layers**: 92.03% accuracy, 422K params - ⭐ optimal efficiency
+- **2 Layers**: 92.03% accuracy, 422K params - optimal efficiency
 - **3 Layers**: 92.27% accuracy, 1.1M params - diminishing returns (+0.24% for 2.5× params)
 - **Insight**: Two layers capture all meaningful Fashion MNIST patterns
 
@@ -128,7 +128,7 @@ mlflow ui
 - **Without BatchNorm**: Performance drops significantly (91.29-91.42%)
 - **Insight**: BatchNorm is primary driver; dropout is secondary support
 
-## 📊 Optimal Configuration
+## Optimal Configuration
 
 ```python
 best_config = {
@@ -153,7 +153,7 @@ best_config = {
 - Training Time: ~18 seconds/epoch (GPU)
 - Overfitting Gap: 0.6% (excellent generalization)
 
-## 🛠️ Technical Stack
+## Technical Stack
 
 - **PyTorch**: Deep learning framework with CUDA support
 - **MLflow**: Experiment tracking and model registry
@@ -162,7 +162,7 @@ best_config = {
 - **Matplotlib/Seaborn**: Results visualization
 - **Pandas**: Data analysis and CSV handling
 
-## 💡 What Worked Well
+## What Worked Well
 
 ✅ **MLflow Integration**: Seamless experiment tracking with automatic metric logging  
 ✅ **GPU Acceleration**: RTX 3060 reduced training time from hours to minutes  
@@ -171,14 +171,14 @@ best_config = {
 ✅ **Factorial Design**: Systematic exploration of hyperparameter interactions  
 ✅ **Comprehensive Logging**: All metrics, parameters, and artifacts tracked
 
-## 🚧 Challenges Overcome
+## Challenges Overcome
 
 1. **Infinite Dataloader Loop**: Fixed by calculating batch limits from dataset size
 2. **Virtual Environment Paths**: Resolved by using activated `python` command
 3. **CUDA Setup**: Installed PyTorch 2.2.0+cu121 for GPU acceleration
 4. **Progress Bar TypeError**: Added try-except wrapper for generator-based dataloaders
 
-## 🔮 Future Improvements
+## Future Improvements
 
 - [ ] Test on full Fashion MNIST (60K samples vs current subset)
 - [ ] Evaluate on CIFAR-10/100 for color image complexity
@@ -196,7 +196,7 @@ best_config = {
 - [Dropout Paper](https://jmlr.org/papers/v15/srivastava14a.html)
 - [Fashion MNIST Dataset](https://github.com/zalandoresearch/fashion-mnist)
 
-## 🎯 Lessons Learned
+## Lessons Learned
 
 1. **BatchNorm First**: Start with batch normalization as foundation
 2. **Moderate Regularization**: Dropout 0.3 is sweet spot for Fashion MNIST
@@ -205,7 +205,7 @@ best_config = {
 5. **Systematic Testing**: Factorial designs reveal interaction effects
 6. **Track Everything**: MLflow makes reproducibility and comparison effortless
 
-## 📊 Quick Results Reference
+## Quick Results Reference
 
 | Experiment | Parameter | Best Value | Val Accuracy | Key Finding |
 |-----------|-----------|------------|--------------|-------------|
@@ -219,8 +219,6 @@ best_config = {
 **Best Run**: `combined_optimal_shallow` → 92.51% validation accuracy
 
 ---
-
-**Status**: ✅ All experiments complete, documentation finished, visualizations generated
 
 Find the [instructions](./instructions.md)
 
@@ -281,10 +279,10 @@ This week focused on systematic hyperparameter optimization for a convolutional 
 
 ## Deliverables
 
-📊 **19 MLflow experiments** tracked in `./mlruns/`  
-📈 **5 visualization charts** analyzing dropout, BatchNorm, depth, pooling, interactions  
-📝 **Comprehensive documentation**: Experiment journal + executive report  
-💻 **Reproducible code**: PowerShell automation + flexible CNN implementation
+**19 MLflow experiments** tracked in `./mlruns/`  
+**5 visualization charts** analyzing dropout, BatchNorm, depth, pooling, interactions  
+**Comprehensive documentation**: Experiment journal + executive report  
+**Reproducible code**: PowerShell automation + flexible CNN implementation
 
 ---
 
