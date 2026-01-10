@@ -1,0 +1,20 @@
+{
+  "total_trials": 10,
+  "best_accuracy": 0.6852861035422343,
+  "mean_accuracy": 0.43555858310626705,
+  "std_accuracy": 0.13759551007057577,
+  "median_accuracy": 0.4066757493188011,
+  "worst_accuracy": 0.25340599455040874,
+  "trials_stopped_early": 6.0,
+  "trials_full_training": 4.0,
+  "avg_training_time": 106.07886872291564,
+  "total_training_time": 1060.7886872291565,
+  "best_config": {
+    "num_conv_layers": 3,
+    "start_filters": 32,
+    "fc_units": 128,
+    "dropout": 0.1496721563163,
+    "lr": 0.0004718595520407037,
+    "batch_size": 32
+  }
+}

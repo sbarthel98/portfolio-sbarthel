@@ -1,4 +1,5 @@
 **/modellogs/**
+**/logs/**
 **/mlruns/**
 **/*.pyc
 .notebookcache
