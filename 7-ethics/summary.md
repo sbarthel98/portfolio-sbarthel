@@ -1,7 +1,21 @@
-# Ethical Reflection: The Cuddlefish Dilemma
+# Ethics in Data Science
 
-While "Project Cuddlefish" was a technical success, it forces us to ask a critical question: is it ethical to use artificial intelligence to enhance a creature's natural abilities?
+**Date**: January 10, 2026  
+**Student**: Stijn Barthel
 
-By providing cuttlefish with "perfect" camouflage, we might disrupt the local predator-prey dynamics. Does our intervention give the cuttlefish an unfair advantage, potentially leading to an ecological imbalance? This project, though whimsical, serves as a microcosm for the broader debate on AI-driven biological enhancement.
+## Assignments
 
-[Go back to Homepage](../README.md)
+### 1. Comparative Analysis of Ethical Frameworks
+
+**File**: [ethical_frameworks.md](./ethical_frameworks.md)
+
+---
+
+### 2. Case Study: Breeze Dating App Algorithmic Discrimination
+
+**File**: [breeze_case_study.md](./breeze_case_study.md)
+
+---
+
+[Back to Portfolio Homepage](../README.md)
+
